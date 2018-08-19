@@ -18,9 +18,9 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.json.formatter.helpers.Constants;
 import org.junit.Assert;
 
+import com.github.devaprasadh.json.formatter.helpers.Constants;
 import com.google.gson.Gson;
 
 /**

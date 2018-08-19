@@ -20,7 +20,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Formatter;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import com.github.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
 import com.github.devaprasadh.json.formatter.helpers.GsonJsonConverter;
@@ -134,8 +136,8 @@ public class JSONFormatter extends Formatter {
 					Class.forName("org.json.simple.JSONObject");
 					jsonConverter = new SimpleJsonConverter();
 				} catch (ClassNotFoundException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					Logger.getAnonymousLogger().log(Level.WARNING,
+							"None of GSON/Jackson/json-simple found in classpath");
 				}
 			}
 		}

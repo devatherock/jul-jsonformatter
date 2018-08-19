@@ -22,7 +22,7 @@ public class Constants {
 	/**
 	 * JSON key for log time
 	 */
-	public static final String KEY_TIMESTAMP = "timestamp";
+	public static final String KEY_TIMESTAMP = "@timestamp";
 	
 	/**
 	 * JSON key for logger name
