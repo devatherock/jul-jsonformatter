@@ -1,0 +1,103 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.github.devaprasadh</groupId>
+  <artifactId>jul-jsonformatter</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <name>JUL JSON Formatter</name>
+  <description>Formatters to log java.util.logging messages as JSON</description>
+  <url>https://github.com/devaprasadh/jul-jsonformatter</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+  	<dependency>
+  		<groupId>com.googlecode.json-simple</groupId>
+    	<artifactId>json-simple</artifactId>
+    	<version>1.1.1</version>
+  	</dependency>
+  	
+  	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.6.2</version>
+	</dependency>
+	
+	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-databind</artifactId>
+  		<version>2.7.3</version>
+	</dependency> 	
+  	
+  	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>3.4</version>
+	</dependency>
+  
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  
+  <build>
+  	<finalName>
+  		${project.artifactId}-${project.version}
+  	</finalName>
+  	 
+    <plugins>
+    	<plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.5.1</version>
+	        <configuration>
+	          <source>1.7</source>
+	          <target>1.7</target>
+	        </configuration>
+	     </plugin>
+
+      <plugin>
+	    <groupId>org.codehaus.mojo</groupId>
+	    <artifactId>build-helper-maven-plugin</artifactId>
+	    <version>1.7</version>
+	    <executions>
+	      <execution>
+	        <phase>validate</phase>
+	        <goals>
+	          <goal>parse-version</goal>
+	        </goals>
+	        <configuration>
+	            <propertyPrefix>parsedVersion</propertyPrefix>
+	        </configuration>
+	      </execution>
+	    </executions>
+	  </plugin>
+	  <plugin>
+	      <groupId>org.codehaus.mojo</groupId>
+	      <artifactId>versions-maven-plugin</artifactId>
+	      <version>2.2</version>
+	      <configuration>
+	      	<newVersion>
+	      		${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion}
+	      	</newVersion>
+	      </configuration>
+	      <executions>
+		      <execution>
+		        <phase>validate</phase>
+		        <goals>
+		          <goal>set</goal>
+		        </goals>
+		      </execution>
+		    </executions>
+    	</plugin>
+    </plugins>
+  </build>
+</project>
