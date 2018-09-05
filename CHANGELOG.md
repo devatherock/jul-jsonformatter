@@ -6,3 +6,9 @@
 
 ### 2018-08-29
 - Added gradle
+
+### 2018-09-04
+- Upgraded gradle to `4.7` to support Java 10
+
+### 2018-09-05
+- Added `git-sync` plugin to sync to a different repository

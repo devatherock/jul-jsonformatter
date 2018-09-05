@@ -1,0 +1,20 @@
+version: 2
+jobs:
+  sync:
+    docker:
+    - image: devatherock/git-sync:1.0.0
+    working_directory: ~/jul-jsonformatter
+    environment:
+      PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/jul-jsonformatter.git"  
+    steps:
+    - checkout
+           
+workflows:
+  version: 2
+  git-sync:
+    jobs:
+    - sync:
+        filters:
+          branches:
+            only: master
+
