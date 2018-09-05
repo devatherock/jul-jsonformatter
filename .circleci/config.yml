@@ -6,8 +6,8 @@ jobs:
     working_directory: ~/jul-jsonformatter
     environment:
       PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/jul-jsonformatter.git"  
-    steps:
-    - checkout
+    #steps:
+    #- checkout
            
 workflows:
   version: 2
