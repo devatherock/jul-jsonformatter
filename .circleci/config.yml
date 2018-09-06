@@ -8,6 +8,9 @@ jobs:
       PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/jul-jsonformatter.git"  
     steps:
     - checkout
+    - add_ssh_keys:
+        fingerprints:
+        - "11:4f:6c:a3:16:52:98:03:17:30:39:f8:2a:38:50:bc"
     - run: sh /scripts/entry-point.sh
            
 workflows:
@@ -18,4 +21,3 @@ workflows:
         filters:
           branches:
             only: master
-
