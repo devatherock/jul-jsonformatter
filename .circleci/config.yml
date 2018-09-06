@@ -3,11 +3,12 @@ jobs:
   sync:
     docker:
     - image: devatherock/git-sync:1.0.0
+      entrypoint: /scripts/entry-point.sh
     working_directory: ~/jul-jsonformatter
     environment:
       PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/jul-jsonformatter.git"  
-    #steps:
-    #- checkout
+    steps:
+    - checkout
            
 workflows:
   version: 2
