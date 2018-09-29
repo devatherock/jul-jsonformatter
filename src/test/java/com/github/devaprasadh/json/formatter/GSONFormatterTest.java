@@ -53,6 +53,7 @@ public class GSONFormatterTest {
 		logger.log(Level.INFO, message);
 
 		String logLine = OUTPUT_STREAM.toString("UTF-8");
+		System.out.println("Log: >>>" + logLine);
 		String actualLogLine = logLine.replace(PREVIOUS_LOG_LINES.toString(), "");
 		Map<String, Object> jsonMap = (Map<String, Object>) new Gson().fromJson(actualLogLine, Map.class);
 		TestUtil.verifyJson(jsonMap, logger.getName(), message, Level.INFO.toString());
@@ -73,6 +74,7 @@ public class GSONFormatterTest {
 		logger.log(Level.INFO, message);
 
 		String logLine = OUTPUT_STREAM.toString("UTF-8");
+		System.out.println("Log: >>>" + logLine);
 		String actualLogLine = logLine.replace(PREVIOUS_LOG_LINES.toString(), "");
 		Map<String, Object> jsonMap = (Map<String, Object>) new Gson().fromJson(actualLogLine, Map.class);
 		TestUtil.verifyJson(jsonMap, logger.getName(), message, Level.INFO.toString());

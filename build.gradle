@@ -12,6 +12,13 @@ project.ext.jsonSimpleVersion = '1.1.1'
 project.ext.gsonVersion = '2.8.5'
 project.ext.jacksonVersion = '2.9.7'
 
+test {
+	testLogging {
+		showStandardStreams = true
+		events "passed", "skipped", "failed"
+	}
+}
+
 dependencies {
     compileOnly group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
 	compileOnly group: 'com.google.code.gson', name: 'gson', version: gsonVersion

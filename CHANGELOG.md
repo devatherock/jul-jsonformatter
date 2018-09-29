@@ -18,3 +18,4 @@
 
 ### 2018-09-29
 - Separate configurations to test `gson`, `json-simple` and `jackson`
+- Fixed the date format pattern used in tests
