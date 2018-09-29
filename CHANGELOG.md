@@ -15,3 +15,6 @@
 
 ### 2018-09-28
 - CircleCI config to build and test
+
+### 2018-09-29
+- Separate configurations to test `gson`, `json-simple` and `jackson`
