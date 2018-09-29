@@ -12,3 +12,6 @@
 
 ### 2018-09-05
 - Added `git-sync` plugin to sync to a different repository
+
+### 2018-09-28
+- CircleCI config to build and test

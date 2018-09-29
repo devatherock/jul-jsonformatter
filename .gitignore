@@ -18,3 +18,5 @@ hs_err_pid*
 /build/
 .idea
 /bin
+/pom.xml.versionsBackup
+*.iml
