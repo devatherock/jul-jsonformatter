@@ -24,7 +24,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies-
-      - run: ./gradlew build bintrayUpload coveralls sonarqube -Dsonar.login=$SONAR_TOKEN -x test
+      - run: ./gradlew build artifactoryPublish coveralls sonarqube -Dsonar.login=$SONAR_TOKEN -x test
       - save_cache:
           paths:
             - ~/.gradle
@@ -85,5 +85,7 @@ workflows:
     jobs:
       - publish:
           filters:
+            branches:
+              only: non-existent-branch
             tags:
               only: /^v[0-9\.]+$/                                   
