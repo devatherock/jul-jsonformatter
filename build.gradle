@@ -143,6 +143,13 @@ task combinedJacocoReport(type: JacocoReport) {
 	}
 }
 
+sonarqube {
+    properties {
+        property 'sonar.jacoco.reportPaths', 'build/jacoco/customJsonTest.exec,build/jacoco/gsonTest.exec,build/jacoco/jacksonTest.exec,build/jacoco/jsonSimpleTest.exec'
+        property 'sonar.junit.reportPaths', 'build/test-results/customJsonTest,build/test-results/gsonTest,build/test-results/jacksonTest,build/test-results/jsonSimpleTest'
+    }
+}
+
 check.dependsOn jsonSimpleTest
 check.dependsOn gsonTest
 check.dependsOn jacksonTest
