@@ -25,7 +25,7 @@ import com.github.devaprasadh.json.formatter.helpers.Constants;
  */
 public class TestUtil {
 	public static final Pattern TIMESTAMP_PATTERN = Pattern
-			.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}[-+]{1}[0-9]{2}:[0-5]{1}[0-9]{1}");
+			.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}([Z]{1}|[-+]{1}[0-9]{2}:[0-5]{1}[0-9]{1})");
 	
 	public static void loadLoggingConfig() {
 		try (InputStream inputStream = TestUtil.class.getClassLoader()

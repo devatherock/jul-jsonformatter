@@ -4,8 +4,8 @@ import java.util.Map;
 
 /**
  * Interface to convert objects to JSON
- * 
- * @author deva
+ *
+ * @author devaprasadh
  *
  */
 public interface JsonConverter {
