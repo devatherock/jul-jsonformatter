@@ -21,3 +21,4 @@
 - Fixed the date format pattern used in tests
 - Used `DateTimeFormatter` instead of `FastDateFormat`
 - `CustomJsonConverter` for when JSON creation library is present in the classpath
+- Test summary in CircleCI
