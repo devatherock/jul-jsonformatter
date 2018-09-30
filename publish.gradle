@@ -70,8 +70,14 @@ bintray {
         name = "${project.name}"
         userOrg = 'devatherock'
         desc = projectDescription
+        websiteUrl = 'https://github.com/devatherock/jul-jsonformatter'
+        issueTrackerUrl = 'https://github.com/devatherock/jul-jsonformatter/issues'
         licenses = ['MIT']
         vcsUrl = 'https://github.com/devatherock/jul-jsonformatter.git'
+        labels = ['jul', 'logging', 'json', 'logstash']
+        githubRepo = 'devatherock/jul-jsonformatter'
+        githubReleaseNotesFile = 'README.md'
+        
         version {
             name = "${project.version}"
             desc = "${project.version}"
