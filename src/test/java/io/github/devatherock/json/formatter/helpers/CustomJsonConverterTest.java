@@ -1,4 +1,4 @@
-package com.devaprasadh.json.formatter.helpers;
+package io.github.devatherock.json.formatter.helpers;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -14,12 +14,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
-import com.devaprasadh.json.formatter.testhelpers.TestUtil;
+import io.github.devatherock.json.formatter.helpers.Constants;
+import io.github.devatherock.json.formatter.helpers.Constants.ExceptionKeys;
+import io.github.devatherock.json.formatter.testhelpers.TestUtil;
 
 /**
- * Unit test for {@code com.devaprasadh.json.formatter.JSONFormatter} with
- * custom JSON converter
+ * Unit test for {@code JSONFormatter} with custom JSON converter
  * 
  * @author Devaprasadh Xavier
  *

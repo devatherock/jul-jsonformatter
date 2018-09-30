@@ -30,3 +30,5 @@
 - Added usage details to readme
 - Added `LICENSE.txt`
 - Fixed a few sonar violations
+- Changed package names to `io.github.devatherock`
+- Gradle configuration to upload to `bintray`

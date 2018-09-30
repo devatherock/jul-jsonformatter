@@ -1,4 +1,4 @@
-package com.devaprasadh.json.formatter.helpers;
+package io.github.devatherock.json.formatter.helpers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -11,15 +11,15 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.devaprasadh.json.formatter.testhelpers.TestUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.github.devatherock.json.formatter.testhelpers.TestUtil;
+
 /**
- * Unit test for {@code com.devaprasadh.json.formatter.JSONFormatter} with
- * jackson
+ * Unit test for {@code JSONFormatter} with jackson
  * 
  * @author Devaprasadh Xavier
  *

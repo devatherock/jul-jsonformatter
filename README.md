@@ -9,13 +9,13 @@
 
 ## Usage
 - Include any one of [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.5), [Jackson](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.9.7) or [json-simple](https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple/1.1.1) libraries in classpath
-- Include a `logging.properties` file in classpath with `com.devaprasadh.json.formatter.JSONFormatter` as the formatter
+- Include a `logging.properties` file in classpath with `io.github.devatherock.json.formatter.JSONFormatter` as the formatter
 
 ```
 handlers=java.util.logging.ConsoleHandler
 
 java.util.logging.ConsoleHandler.level=INFO
-java.util.logging.ConsoleHandler.formatter=com.devaprasadh.json.formatter.JSONFormatter
+java.util.logging.ConsoleHandler.formatter=io.github.devatherock.json.formatter.JSONFormatter
 ```
 
 The path to the logging.properties file can also be passed as JVM arg 
@@ -26,10 +26,10 @@ Each line in the generated log will be a JSON. Sample one line message:
 ```json
 {
     "@timestamp": "2018-09-30T08:00:17.632-05:00",
-    "logger_name": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "logger_name": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "level": "INFO",
     "thread_name": "Test worker",
-    "class": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "class": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "method": "testSimpleMessage",
     "message": "First message"
 }
@@ -39,10 +39,10 @@ Multi-line message:
 ```json
 {
     "@timestamp": "2018-09-30T08:00:17.654-05:00",
-    "logger_name": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "logger_name": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "level": "INFO",
     "thread_name": "Test worker",
-    "class": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "class": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "method": "testMessageWithNewLine",
     "message": "Next message\n"
 }
@@ -52,10 +52,10 @@ Message with exception:
 ```json
 {
     "@timestamp": "2018-09-30T08:33:58.394-05:00",
-    "logger_name": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "logger_name": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "level": "SEVERE",
     "thread_name": "Test worker",
-    "class": "com.devaprasadh.json.formatter.helpers.GSONFormatterTest",
+    "class": "io.github.devatherock.json.formatter.helpers.GSONFormatterTest",
     "method": "testMessageWithExceptionWithExceptionMessage",
     "message": "Test message with exception",
     "exception": {

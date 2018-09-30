@@ -1,9 +1,12 @@
 plugins {
 	id 'com.github.kt3k.coveralls' version '2.6.3'
 	id 'org.sonarqube' version '2.6'
+	id 'maven-publish'
+    id "com.jfrog.bintray" version "1.7.3"
 }
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply from: 'publish.gradle'
 
 repositories {
     jcenter()
@@ -11,6 +14,7 @@ repositories {
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
+group = "io.github.devatherock"
 version = '1.0.0'
 
 project.ext.jsonSimpleVersion = '1.1.1'
@@ -146,6 +150,7 @@ task combinedJacocoReport(type: JacocoReport) {
 	}
 }
 
+/** SonarQube config **/
 sonarqube {
     properties {
         property 'sonar.jacoco.reportPaths', 'build/jacoco/customJsonTest.exec,build/jacoco/gsonTest.exec,build/jacoco/jacksonTest.exec,build/jacoco/jsonSimpleTest.exec'

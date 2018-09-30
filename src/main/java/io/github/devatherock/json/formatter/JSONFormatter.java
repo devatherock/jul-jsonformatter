@@ -1,13 +1,13 @@
-package com.devaprasadh.json.formatter;
+package io.github.devatherock.json.formatter;
 
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_CLASS;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_METHOD;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_NAME;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOG_LEVEL;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_MESSAGE;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_THREAD_NAME;
-import static com.devaprasadh.json.formatter.helpers.Constants.KEY_TIMESTAMP;
-import static com.devaprasadh.json.formatter.helpers.Constants.THREAD_NAME_CACHE_SIZE;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_LOGGER_CLASS;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_LOGGER_METHOD;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_LOGGER_NAME;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_LOG_LEVEL;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_MESSAGE;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_THREAD_NAME;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_TIMESTAMP;
+import static io.github.devatherock.json.formatter.helpers.Constants.THREAD_NAME_CACHE_SIZE;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -24,16 +24,17 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import com.devaprasadh.json.formatter.helpers.Constants;
-import com.devaprasadh.json.formatter.helpers.CustomJsonConverter;
-import com.devaprasadh.json.formatter.helpers.GsonJsonConverter;
-import com.devaprasadh.json.formatter.helpers.JacksonJsonConverter;
-import com.devaprasadh.json.formatter.helpers.JsonConverter;
-import com.devaprasadh.json.formatter.helpers.SimpleJsonConverter;
-import com.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
+import io.github.devatherock.json.formatter.helpers.Constants;
+import io.github.devatherock.json.formatter.helpers.CustomJsonConverter;
+import io.github.devatherock.json.formatter.helpers.GsonJsonConverter;
+import io.github.devatherock.json.formatter.helpers.JacksonJsonConverter;
+import io.github.devatherock.json.formatter.helpers.JsonConverter;
+import io.github.devatherock.json.formatter.helpers.SimpleJsonConverter;
+import io.github.devatherock.json.formatter.helpers.Constants.ExceptionKeys;
 
 /**
- * A JSONFormatter for java.util.logging logs
+ * A {@code java.util.logging.Formatter} for java.util.logging that logs
+ * messages as JSON
  */
 public class JSONFormatter extends Formatter {
 	/**

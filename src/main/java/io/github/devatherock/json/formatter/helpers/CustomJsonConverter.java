@@ -1,4 +1,4 @@
-package com.devaprasadh.json.formatter.helpers;
+package io.github.devatherock.json.formatter.helpers;
 
 import java.util.Map;
 

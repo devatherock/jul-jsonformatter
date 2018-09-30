@@ -1,4 +1,4 @@
-package com.devaprasadh.json.formatter.testhelpers;
+package io.github.devatherock.json.formatter.testhelpers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,8 +16,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-import com.devaprasadh.json.formatter.helpers.Constants;
-import com.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
+import io.github.devatherock.json.formatter.helpers.Constants;
+import io.github.devatherock.json.formatter.helpers.Constants.ExceptionKeys;
 
 /**
  * Helper class for testing log formatting
