@@ -35,6 +35,7 @@ def pomConfig = {
     }
 }
 
+def projectDescription = 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash'
 publishing {
     publications {
         mavenPublication(MavenPublication) {
@@ -50,7 +51,7 @@ publishing {
             version "${project.version}"
             pom.withXml {
                 def root = asNode()
-                root.appendNode('description', 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash')
+                root.appendNode('description', projectDescription)
                 root.appendNode('name', "${project.name}")
                 root.appendNode('url', 'https://github.com/devatherock/jul-jsonformatter')
                 root.children().last() + pomConfig
@@ -68,6 +69,7 @@ bintray {
         repo = "${project.name}"
         name = "${project.name}"
         userOrg = 'devatherock'
+        desc = projectDescription
         licenses = ['MIT']
         vcsUrl = 'https://github.com/devatherock/jul-jsonformatter.git'
         version {
@@ -75,6 +77,7 @@ bintray {
             desc = "${project.version}"
             released  = new Date()
         }
+        publish = true
     }
 }
 bintrayUpload.dependsOn build
