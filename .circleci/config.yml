@@ -11,8 +11,8 @@ jobs:
           - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
       - run: ./gradlew check -x test
-      - post:
-          - coveralls
+      - store_test_results:
+          path: test
   build:
     docker:
       - image: circleci/openjdk:8-jdk
