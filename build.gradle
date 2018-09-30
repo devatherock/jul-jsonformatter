@@ -1,3 +1,6 @@
+plugins {
+	id 'com.github.kt3k.coveralls' version '2.6.3'
+}
 apply plugin: 'java'
 apply plugin: 'jacoco'
 
@@ -131,8 +134,10 @@ task combinedJacocoReport(type: JacocoReport) {
 	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
    
 	reports {
-		xml.enabled false
+		xml.enabled true
 		csv.enabled false
+		html.enabled true
+		xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
 		html.destination file("${buildDir}/reports/jacoco")
 	}
 }
