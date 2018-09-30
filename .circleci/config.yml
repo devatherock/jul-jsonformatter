@@ -8,8 +8,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          - v1-dependencies-
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
       - run: |
           ./gradlew check coveralls -x test
       - store_test_results:
@@ -22,9 +22,9 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          - v1-dependencies-
-      - run: ./gradlew build coveralls sonarqube -Dsonar.login=$SONAR_TOKEN -x test
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
+      - run: ./gradlew build bintrayUpload coveralls sonarqube -Dsonar.login=$SONAR_TOKEN -x test
       - save_cache:
           paths:
             - ~/.gradle
@@ -42,28 +42,25 @@ jobs:
     environment:
       PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/julid 'com.github.kt3k.coveralls' version '2.6.3'-jsonformatter.git"  
     steps:
-    - checkout
-    - add_ssh_keys:
-        fingerprints:
-        - "11:4f:6c:a3:16:52:98:03:17:30:39:f8:2a:38:50:bc"
-    - run: sh /scripts/entry-point.sh
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "11:4f:6c:a3:16:52:98:03:17:30:39:f8:2a:38:50:bc"
+      - run: sh /scripts/entry-point.sh
            
 workflows:
   version: 2
-  git-sync:
-    jobs:
-    - sync:
-        filters:
-          branches:
-            only: master
   build-test:
     jobs:
-    - test:
-        filters:
-          branches:
-            ignore: 
-            - master
-    - build:
-        filters:
-          branches:
-            only: master            
+      - test:
+          filters:
+            branches:
+              ignore: 
+                - master
+      - build:
+          filters:
+            branches:
+              only: master
+      - sync:
+          requires:
+            - build                       
