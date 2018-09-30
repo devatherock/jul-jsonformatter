@@ -10,7 +10,8 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
-      - run: ./gradlew check -x test
+      - run: |
+          ./gradlew check coveralls -x test
       - store_test_results:
           path: build/test-results
   build:
@@ -23,7 +24,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
-      - run: ./gradlew build -x test
+      - run: ./gradlew build coveralls -x test
       - save_cache:
           paths:
             - ~/.gradle
@@ -39,7 +40,7 @@ jobs:
     - image: devatherock/git-sync:1.0.0
     working_directory: ~/jul-jsonformatter
     environment:
-      PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/jul-jsonformatter.git"  
+      PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/julid 'com.github.kt3k.coveralls' version '2.6.3'-jsonformatter.git"  
     steps:
     - checkout
     - add_ssh_keys:
