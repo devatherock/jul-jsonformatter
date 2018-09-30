@@ -22,3 +22,5 @@
 - Used `DateTimeFormatter` instead of `FastDateFormat`
 - `CustomJsonConverter` for when JSON creation library is present in the classpath
 - Test summary in CircleCI
+- Code coverage using `coveralls`
+- sonarqube integration
