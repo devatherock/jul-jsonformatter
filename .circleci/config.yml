@@ -36,7 +36,22 @@ jobs:
       - store_artifacts:
           path: build/reports/jacoco    
       - store_test_results:
-          path: build/test-results    
+          path: build/test-results
+  publish:
+    docker:
+      - image: circleci/openjdk:8-jdk
+    working_directory: ~/jul-jsonformatter
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies-
+      - run: ./gradlew build bintrayUpload -x test
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}           
   sync:
     docker:
     - image: devatherock/git-sync:1.0.0
@@ -52,7 +67,7 @@ jobs:
            
 workflows:
   version: 2
-  build-test:
+  build_test:
     jobs:
       - test:
           filters:
@@ -65,4 +80,10 @@ workflows:
               only: master
       - sync:
           requires:
-            - build                       
+            - build
+  publish_artifacts:
+    jobs:
+      - publish:
+          filters:
+            tags:
+              only: /^v[0-9\.]+$/                                   

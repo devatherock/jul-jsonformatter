@@ -79,11 +79,10 @@ bintray {
         githubReleaseNotesFile = 'README.md'
         
         version {
-            name = "${project.version}"
-            desc = "${project.version}"
-            released  = new Date()
+            desc = projectDescription
         }
         publish = true
+        publicDownloadNumbers = true
     }
 }
 bintrayUpload.dependsOn build
