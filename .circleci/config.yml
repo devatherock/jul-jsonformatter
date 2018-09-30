@@ -24,7 +24,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "build.gradle" }}
           - v1-dependencies-
-      - run: ./gradlew build coveralls -x test
+      - run: ./gradlew build coveralls sonarqube -Dsonar.login=$SONAR_TOKEN -x test
       - save_cache:
           paths:
             - ~/.gradle
