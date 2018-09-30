@@ -12,7 +12,7 @@ jobs:
           - v1-dependencies-
       - run: ./gradlew check -x test
       - store_test_results:
-          path: test
+          path: build/test-results
   build:
     docker:
       - image: circleci/openjdk:8-jdk
@@ -32,6 +32,8 @@ jobs:
           path: build/libs
       - store_artifacts:
           path: build/reports/tests/test
+      - store_test_results:
+          path: build/test-results    
   sync:
     docker:
     - image: devatherock/git-sync:1.0.0
