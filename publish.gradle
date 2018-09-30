@@ -38,15 +38,16 @@ def pomConfig = {
 publishing {
     publications {
         mavenPublication(MavenPublication) {
-            groupId "${project.group}"
-            artifactId "${project.name}"
-            artifact "${buildDir}/libs/${project.name}-${project.version}.jar"
+         	from components.java
             artifact sourcesJar {
                 classifier "sources"
             }
             artifact javadocJar {
                 classifier "javadoc"
             }
+            groupId "${project.group}"
+            artifactId "${project.name}"
+            version "${project.version}"
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash')
@@ -67,7 +68,7 @@ bintray {
         repo = "${project.name}"
         name = "${project.name}"
         userOrg = 'devatherock'
-        licenses = ['MIT License']
+        licenses = ['MIT']
         vcsUrl = 'https://github.com/devatherock/jul-jsonformatter.git'
         version {
             name = "${project.version}"
