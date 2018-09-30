@@ -54,6 +54,7 @@ sourceSets {
             ]
             exclude '**/GSONFormatterTest.java'
             exclude '**/JacksonFormatterTest.java'
+            exclude '**/CustomJsonConverterTest.java'
         }
 		resources.srcDir file('src/test/resources')
     }
@@ -66,6 +67,7 @@ sourceSets {
             ]
             exclude '**/JSONSimpleFormatterTest.java'
             exclude '**/JacksonFormatterTest.java'
+            exclude '**/CustomJsonConverterTest.java'
         }
 		resources.srcDir file('src/test/resources')
     }
@@ -78,6 +80,7 @@ sourceSets {
             ]
             exclude '**/JSONSimpleFormatterTest.java'
             exclude '**/GSONFormatterTest.java'
+            exclude '**/CustomJsonConverterTest.java'
         }
 		resources.srcDir file('src/test/resources')
     }

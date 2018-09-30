@@ -1,4 +1,4 @@
-package com.github.devaprasadh.json.formatter.helpers;
+package com.devaprasadh.json.formatter.helpers;
 
 import java.util.Map;
 
@@ -65,7 +65,7 @@ public class CustomJsonConverter implements JsonConverter {
 	 * @param value
 	 * @param log
 	 */
-	private void appendJson(String key, Object value, StringBuilder log) {
+	private void appendJson(Object key, Object value, StringBuilder log) {
 		log.append(DOUBLE_QUOTE);
 		log.append(key);
 		log.append(DOUBLE_QUOTE);
@@ -80,7 +80,7 @@ public class CustomJsonConverter implements JsonConverter {
 		}
 	}
 
-	private void appendJsonObject(String key, Object value, StringBuilder log) {
+	private void appendJsonObject(Object key, Object value, StringBuilder log) {
 		if (value instanceof Map) {
 			log.append(DOUBLE_QUOTE);
 			log.append(key);
@@ -88,8 +88,8 @@ public class CustomJsonConverter implements JsonConverter {
 			log.append(COLON);
 			log.append(OBJ_START);
 
-			Map<String, Object> map = (Map<String, Object>) value;
-			for (Map.Entry<String, Object> entry : map.entrySet()) {
+			Map<Object, Object> map = (Map<Object, Object>) value;
+			for (Map.Entry<Object, Object> entry : map.entrySet()) {
 				appendJsonObject(entry.getKey(), entry.getValue(), log);
 				log.append(COMMA);
 			}
@@ -109,35 +109,31 @@ public class CustomJsonConverter implements JsonConverter {
 	 * @return
 	 */
 	private static String escapeJson(String message) {
-		if (null != message) {
-			StringBuilder escapedText = new StringBuilder(message.length());
-			boolean notEscaped = true;
-			char currentChar = ' ';
+		StringBuilder escapedText = new StringBuilder(message.length());
+		boolean notEscaped = true;
+		char currentChar;
 
-			for (int index = 0; index < message.length(); index++) {
-				notEscaped = true;
-				currentChar = message.charAt(index);
-				for (int escapeIndex = 0; escapeIndex < CHARS_TO_ESCAPE.length; escapeIndex++) {
-					if (currentChar == CHARS_TO_ESCAPE[escapeIndex]) {
-						escapedText.append(ESCAPE_CHARS[escapeIndex]);
-						notEscaped = false;
-						break;
-					}
-				}
-				if (notEscaped) {
-					if ((int) currentChar > 31) {
-						escapedText.append(currentChar);
-					}
-					// Replace control characters with an empty space
-					else {
-						escapedText.append(' ');
-					}
+		for (int index = 0; index < message.length(); index++) {
+			notEscaped = true;
+			currentChar = message.charAt(index);
+			for (int escapeIndex = 0; escapeIndex < CHARS_TO_ESCAPE.length; escapeIndex++) {
+				if (currentChar == CHARS_TO_ESCAPE[escapeIndex]) {
+					escapedText.append(ESCAPE_CHARS[escapeIndex]);
+					notEscaped = false;
+					break;
 				}
 			}
-			return escapedText.toString();
-		} else {
-			return message;
+			if (notEscaped) {
+				if ((int) currentChar > 31) {
+					escapedText.append(currentChar);
+				}
+				// Replace control characters with an empty space
+				else {
+					escapedText.append(' ');
+				}
+			}
 		}
+		return escapedText.toString();
 	}
 
 }

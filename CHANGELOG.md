@@ -24,3 +24,9 @@
 - Test summary in CircleCI
 - Code coverage using `coveralls`
 - sonarqube integration
+
+### 2018-09-30
+- Improved test coverage
+- Added usage details to readme
+- Added `LICENSE.txt`
+- Fixed a few sonar violations

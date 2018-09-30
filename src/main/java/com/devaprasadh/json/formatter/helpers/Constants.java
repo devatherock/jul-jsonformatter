@@ -1,4 +1,4 @@
-package com.github.devaprasadh.json.formatter.helpers;
+package com.devaprasadh.json.formatter.helpers;
 
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -64,7 +64,7 @@ public class Constants {
 	/**
 	 * JSON keys used for fields within the exception object
 	 */
-	public static enum ExceptionKeys {
+	public enum ExceptionKeys {
 		exception_class, exception_message, stack_trace
-	};
+	}
 }

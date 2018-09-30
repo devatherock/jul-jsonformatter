@@ -1,13 +1,13 @@
-package com.github.devaprasadh.json.formatter;
+package com.devaprasadh.json.formatter;
 
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_CLASS;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_METHOD;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_NAME;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_LOG_LEVEL;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_MESSAGE;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_THREAD_NAME;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.KEY_TIMESTAMP;
-import static com.github.devaprasadh.json.formatter.helpers.Constants.THREAD_NAME_CACHE_SIZE;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_CLASS;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_METHOD;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOGGER_NAME;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_LOG_LEVEL;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_MESSAGE;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_THREAD_NAME;
+import static com.devaprasadh.json.formatter.helpers.Constants.KEY_TIMESTAMP;
+import static com.devaprasadh.json.formatter.helpers.Constants.THREAD_NAME_CACHE_SIZE;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -24,13 +24,13 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-import com.github.devaprasadh.json.formatter.helpers.Constants;
-import com.github.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
-import com.github.devaprasadh.json.formatter.helpers.CustomJsonConverter;
-import com.github.devaprasadh.json.formatter.helpers.GsonJsonConverter;
-import com.github.devaprasadh.json.formatter.helpers.JacksonJsonConverter;
-import com.github.devaprasadh.json.formatter.helpers.JsonConverter;
-import com.github.devaprasadh.json.formatter.helpers.SimpleJsonConverter;
+import com.devaprasadh.json.formatter.helpers.Constants;
+import com.devaprasadh.json.formatter.helpers.CustomJsonConverter;
+import com.devaprasadh.json.formatter.helpers.GsonJsonConverter;
+import com.devaprasadh.json.formatter.helpers.JacksonJsonConverter;
+import com.devaprasadh.json.formatter.helpers.JsonConverter;
+import com.devaprasadh.json.formatter.helpers.SimpleJsonConverter;
+import com.devaprasadh.json.formatter.helpers.Constants.ExceptionKeys;
 
 /**
  * A JSONFormatter for java.util.logging logs
@@ -58,7 +58,7 @@ public class JSONFormatter extends Formatter {
 
 	@Override
 	public String format(LogRecord record) {
-		Map<String, Object> object = new LinkedHashMap<String, Object>();
+		Map<String, Object> object = new LinkedHashMap<>();
 		object.put(KEY_TIMESTAMP, Constants.ISO_8601_FORMAT.format(Instant.ofEpochMilli(record.getMillis())));
 		object.put(KEY_LOGGER_NAME, record.getLoggerName());
 		object.put(KEY_LOG_LEVEL, record.getLevel().getName());
@@ -86,7 +86,7 @@ public class JSONFormatter extends Formatter {
 			PrintWriter pw = new PrintWriter(sw);
 			record.getThrown().printStackTrace(pw);
 			pw.close();
-			exceptionInfo.put(ExceptionKeys.stack_trace, sw);
+			exceptionInfo.put(ExceptionKeys.stack_trace, sw.toString());
 			object.put("exception", exceptionInfo);
 		}
 
