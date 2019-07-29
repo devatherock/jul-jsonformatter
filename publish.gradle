@@ -81,6 +81,15 @@ bintray {
         
         version {
             desc = projectDescription
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+                user = System.env.SONATYPE_USERNAME
+                password = System.env.SONATYPE_PASSWORD
+                close = '1'
+            }            
         }
         publish = true
         publicDownloadNumbers = true
