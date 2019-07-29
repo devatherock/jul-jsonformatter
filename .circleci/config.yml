@@ -88,4 +88,4 @@ workflows:
             branches:
               only: non-existent-branch
             tags:
-              only: /^v[0-9\.]+.*$/                                   
+              only: /^v[0-9\.]+$/                                   
