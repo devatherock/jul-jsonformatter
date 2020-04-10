@@ -38,6 +38,27 @@ io.github.devatherock.json.formatter.JSONFormatter.key_message=message
 io.github.devatherock.json.formatter.JSONFormatter.key_exception=exception
 ```
 
+## Use slf4j log level names
+
+
+Change the log level names using the same mapping as [SLF4JBridgeHandler](http://www.slf4j.org/apidocs/org/slf4j/bridge/SLF4JBridgeHandler.html):
+
+```
+FINEST  -> TRACE
+FINER   -> DEBUG
+FINE    -> DEBUG
+INFO    -> INFO
+CONFIG  -> CONFIG
+WARNING -> WARN
+SEVERE  -> ERROR
+```
+
+Set the following in the `logging.properties` file to change the log level names:
+
+```properties
+io.github.devatherock.json.formatter.JSONFormatter.use_slf4j_level_names=true
+```
+
 ## Samples
 
 Each line in the generated log will be a JSON. Sample one line message:

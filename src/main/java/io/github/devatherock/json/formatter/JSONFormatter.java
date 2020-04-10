@@ -58,6 +58,8 @@ public class JSONFormatter extends Formatter {
 		}
 	};
 
+	private boolean useSlf4jLevelNames = false;
+
 	public JSONFormatter() {
 		configure();
 	}
@@ -68,7 +70,11 @@ public class JSONFormatter extends Formatter {
 	private void configure() {
 		LogManager manager = LogManager.getLogManager();
 		String cname = getClass().getName();
-		String value = manager.getProperty(cname + ".key_timestamp");
+
+		String value = manager.getProperty(cname + ".use_slf4j_level_names");
+		useSlf4jLevelNames = Boolean.valueOf(value);
+
+		value = manager.getProperty(cname + ".key_timestamp");
 		if (value != null) {
 			Constants.KEY_TIMESTAMP = value;
 		}
@@ -107,7 +113,11 @@ public class JSONFormatter extends Formatter {
 		Map<String, Object> object = new LinkedHashMap<>();
 		object.put(KEY_TIMESTAMP, Constants.ISO_8601_FORMAT.format(Instant.ofEpochMilli(record.getMillis())));
 		object.put(KEY_LOGGER_NAME, record.getLoggerName());
-		object.put(KEY_LOG_LEVEL, record.getLevel().getName());
+		if (useSlf4jLevelNames) {
+			object.put(KEY_LOG_LEVEL, renameLogLevel(record.getLevel().getName()));
+		} else {
+			object.put(KEY_LOG_LEVEL, record.getLevel().getName());
+		}
 		object.put(KEY_THREAD_NAME, getThreadName(record.getThreadID()));
 
 		if (null != record.getSourceClassName()) {
@@ -192,5 +202,47 @@ public class JSONFormatter extends Formatter {
 		}
 
 		return jsonConverter;
+	}
+
+	/**
+	 * Rename log levels to
+	 * http://www.slf4j.org/apidocs/org/slf4j/bridge/SLF4JBridgeHandler.html
+	 * 
+	 * <pre>
+	 * FINEST  -&gt; TRACE
+	 * FINER   -&gt; DEBUG
+	 * FINE    -&gt; DEBUG
+	 * INFO    -&gt; INFO
+	 * CONFIG  -&gt; CONFIG
+	 * WARNING -&gt; WARN
+	 * SEVERE  -&gt; ERROR
+	 * </pre>
+	 * 
+	 * @param logLevel
+	 * @return
+	 */
+	private String renameLogLevel(String logLevel) {
+
+		switch (logLevel) {
+		case "FINEST":
+			return "TRACE";
+
+		case "FINER":
+		case "FINE":
+			return "DEBUG";
+
+		case "INFO":
+		case "CONFIG":
+			return "INFO";
+
+		case "WARNING":
+			return "WARN";
+
+		case "SEVERE":
+			return "ERROR";
+
+		default:
+			return logLevel;
+		}
 	}
 }
