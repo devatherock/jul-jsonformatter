@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
@@ -56,6 +57,50 @@ public class JSONFormatter extends Formatter {
 			return (size() > THREAD_NAME_CACHE_SIZE);
 		}
 	};
+
+	public JSONFormatter() {
+		configure();
+	}
+
+	/**
+	 * Configure a {@link JSONFormatter} from LogManager properties.
+	 */
+	private void configure() {
+		LogManager manager = LogManager.getLogManager();
+		String cname = getClass().getName();
+		String value = manager.getProperty(cname + ".key_timestamp");
+		if (value != null) {
+			Constants.KEY_TIMESTAMP = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_name");
+		if (value != null) {
+			Constants.KEY_LOGGER_NAME = value;
+		}
+		value = manager.getProperty(cname + ".key_log_level");
+		if (value != null) {
+			Constants.KEY_LOG_LEVEL = value;
+		}
+		value = manager.getProperty(cname + ".key_thread_name");
+		if (value != null) {
+			Constants.KEY_THREAD_NAME = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_class");
+		if (value != null) {
+			Constants.KEY_LOGGER_CLASS = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_method");
+		if (value != null) {
+			Constants.KEY_LOGGER_METHOD = value;
+		}
+		value = manager.getProperty(cname + ".key_message");
+		if (value != null) {
+			Constants.KEY_MESSAGE = value;
+		}
+		value = manager.getProperty(cname + ".key_exception");
+		if (value != null) {
+			Constants.KEY_EXCEPTION = value;
+		}
+	}
 
 	@Override
 	public String format(LogRecord record) {
