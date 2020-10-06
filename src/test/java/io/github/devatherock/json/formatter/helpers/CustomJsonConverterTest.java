@@ -14,7 +14,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import io.github.devatherock.json.formatter.helpers.Constants;
 import io.github.devatherock.json.formatter.helpers.Constants.ExceptionKeys;
 import io.github.devatherock.json.formatter.testhelpers.TestUtil;
 

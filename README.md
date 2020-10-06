@@ -22,7 +22,45 @@ java.util.logging.ConsoleHandler.formatter=io.github.devatherock.json.formatter.
 The path to the logging.properties file can also be passed as JVM arg 
 like `-Djava.util.logging.config.file=/path/to/logging.properties`
 
+## Change key names
+
+You can change the key names using the configuration file `logging.properties`  
+The following is an example with the default key names:
+
+```properties
+io.github.devatherock.json.formatter.JSONFormatter.key_timestamp=@timestamp
+io.github.devatherock.json.formatter.JSONFormatter.key_logger_name=logger_name
+io.github.devatherock.json.formatter.JSONFormatter.key_log_level=level
+io.github.devatherock.json.formatter.JSONFormatter.key_thread_name=thread_name
+io.github.devatherock.json.formatter.JSONFormatter.key_logger_class=class
+io.github.devatherock.json.formatter.JSONFormatter.key_logger_method=method
+io.github.devatherock.json.formatter.JSONFormatter.key_message=message
+io.github.devatherock.json.formatter.JSONFormatter.key_exception=exception
+```
+
+## Use slf4j log level names
+
+
+Change the log level names using the same mapping as [SLF4JBridgeHandler](http://www.slf4j.org/apidocs/org/slf4j/bridge/SLF4JBridgeHandler.html):
+
+```
+FINEST  -> TRACE
+FINER   -> DEBUG
+FINE    -> DEBUG
+INFO    -> INFO
+CONFIG  -> CONFIG
+WARNING -> WARN
+SEVERE  -> ERROR
+```
+
+Set the following in the `logging.properties` file to change the log level names:
+
+```properties
+io.github.devatherock.json.formatter.JSONFormatter.use_slf4j_level_names=true
+```
+
 ## Samples
+
 Each line in the generated log will be a JSON. Sample one line message:
 ```json
 {

@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
@@ -57,12 +58,66 @@ public class JSONFormatter extends Formatter {
 		}
 	};
 
+	private boolean useSlf4jLevelNames = false;
+
+	public JSONFormatter() {
+		configure();
+	}
+
+	/**
+	 * Configure a {@link JSONFormatter} from LogManager properties.
+	 */
+	private void configure() {
+		LogManager manager = LogManager.getLogManager();
+		String cname = getClass().getName();
+
+		String value = manager.getProperty(cname + ".use_slf4j_level_names");
+		useSlf4jLevelNames = Boolean.valueOf(value);
+
+		value = manager.getProperty(cname + ".key_timestamp");
+		if (value != null) {
+			Constants.KEY_TIMESTAMP = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_name");
+		if (value != null) {
+			Constants.KEY_LOGGER_NAME = value;
+		}
+		value = manager.getProperty(cname + ".key_log_level");
+		if (value != null) {
+			Constants.KEY_LOG_LEVEL = value;
+		}
+		value = manager.getProperty(cname + ".key_thread_name");
+		if (value != null) {
+			Constants.KEY_THREAD_NAME = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_class");
+		if (value != null) {
+			Constants.KEY_LOGGER_CLASS = value;
+		}
+		value = manager.getProperty(cname + ".key_logger_method");
+		if (value != null) {
+			Constants.KEY_LOGGER_METHOD = value;
+		}
+		value = manager.getProperty(cname + ".key_message");
+		if (value != null) {
+			Constants.KEY_MESSAGE = value;
+		}
+		value = manager.getProperty(cname + ".key_exception");
+		if (value != null) {
+			Constants.KEY_EXCEPTION = value;
+		}
+	}
+
 	@Override
 	public String format(LogRecord record) {
 		Map<String, Object> object = new LinkedHashMap<>();
 		object.put(KEY_TIMESTAMP, Constants.ISO_8601_FORMAT.format(Instant.ofEpochMilli(record.getMillis())));
 		object.put(KEY_LOGGER_NAME, record.getLoggerName());
-		object.put(KEY_LOG_LEVEL, record.getLevel().getName());
+		if (useSlf4jLevelNames) {
+			object.put(KEY_LOG_LEVEL, renameLogLevel(record.getLevel().getName()));
+		} else {
+			object.put(KEY_LOG_LEVEL, record.getLevel().getName());
+		}
 		object.put(KEY_THREAD_NAME, getThreadName(record.getThreadID()));
 
 		if (null != record.getSourceClassName()) {
@@ -147,5 +202,47 @@ public class JSONFormatter extends Formatter {
 		}
 
 		return jsonConverter;
+	}
+
+	/**
+	 * Rename log levels to
+	 * http://www.slf4j.org/apidocs/org/slf4j/bridge/SLF4JBridgeHandler.html
+	 * 
+	 * <pre>
+	 * FINEST  -&gt; TRACE
+	 * FINER   -&gt; DEBUG
+	 * FINE    -&gt; DEBUG
+	 * INFO    -&gt; INFO
+	 * CONFIG  -&gt; CONFIG
+	 * WARNING -&gt; WARN
+	 * SEVERE  -&gt; ERROR
+	 * </pre>
+	 * 
+	 * @param logLevel
+	 * @return
+	 */
+	private String renameLogLevel(String logLevel) {
+
+		switch (logLevel) {
+		case "FINEST":
+			return "TRACE";
+
+		case "FINER":
+		case "FINE":
+			return "DEBUG";
+
+		case "INFO":
+		case "CONFIG":
+			return "INFO";
+
+		case "WARNING":
+			return "WARN";
+
+		case "SEVERE":
+			return "ERROR";
+
+		default:
+			return logLevel;
+		}
 	}
 }
