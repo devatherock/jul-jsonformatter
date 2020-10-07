@@ -113,7 +113,7 @@ workflows:
       - build:
           context:
             - docker-credentials
-            - sonatype-credentials
+            - bintray-credentials
           filters:
             branches:
               only: master
@@ -135,6 +135,7 @@ workflows:
           context:
             - docker-credentials
             - bintray-credentials
+            - sonatype-credentials
           filters:
             branches:
               only: non-existent-branch
