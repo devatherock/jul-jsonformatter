@@ -1,9 +1,29 @@
-version: 2
+openjdk_image: &openjdk_image
+  docker:
+    - image: circleci/openjdk:8-jdk
+      auth:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+
+slack_image: &slack_image
+  docker:
+    - image: devatherock/simple-slack:0.4.0
+      auth:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+
+work_directory: &work_directory
+  working_directory: ~/jul-jsonformatter
+
+resource_class: &resource_class
+  resource_class: small
+
+version: 2.1
 jobs:
   test:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    working_directory: ~/jul-jsonformatter
+    <<: *openjdk_image
+    <<: *resource_class
+    <<: *work_directory
     steps:
       - checkout
       - restore_cache:
@@ -14,10 +34,11 @@ jobs:
           ./gradlew check coveralls -x test
       - store_test_results:
           path: build/test-results
+
   build:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    working_directory: ~/jul-jsonformatter
+    <<: *openjdk_image
+    <<: *resource_class
+    <<: *work_directory
     steps:
       - checkout
       - restore_cache:
@@ -37,10 +58,11 @@ jobs:
           path: build/reports/jacoco    
       - store_test_results:
           path: build/test-results
+
   publish:
-    docker:
-      - image: circleci/openjdk:8-jdk
-    working_directory: ~/jul-jsonformatter
+    <<: *openjdk_image
+    <<: *resource_class
+    <<: *work_directory
     steps:
       - checkout
       - restore_cache:
@@ -51,41 +73,82 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}           
-  sync:
-    docker:
-    - image: devatherock/git-sync:1.0.0
-    working_directory: ~/jul-jsonformatter
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+
+  notify_success:
+    <<: *slack_image
+    <<: *resource_class
     environment:
-      PLUGIN_TARGET_REPO: "git@bitbucket.org:devaprasadh/julid 'com.github.kt3k.coveralls' version '2.6.3'-jsonformatter.git"  
+      TEXT: "Success: {{.CircleBuildUrl}} by {{.CircleUsername}}"
+      COLOR: "#33ad7f"
+      CHANNEL: general
+      TITLE: "Build completed"
     steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "11:4f:6c:a3:16:52:98:03:17:30:39:f8:2a:38:50:bc"
-      - run: sh /scripts/entry-point.sh
+      - run: /bin/simpleslack
+  notify_failure:
+    <<: *slack_image
+    <<: *resource_class
+    environment:
+      TEXT: "Failure: {{.CircleBuildUrl}} by {{.CircleUsername}}"
+      COLOR: "#a1040c"
+      CHANNEL: general
+      TITLE: "Build completed"
+    steps:
+      - run:
+          name: Failure notification
+          command: /bin/simpleslack
+          when: on_fail
            
 workflows:
-  version: 2
+  version: 2.1
   build_test:
     jobs:
       - test:
+          context:
+            - docker-credentials
           filters:
             branches:
               ignore: 
                 - master
       - build:
+          context:
+            - docker-credentials
+            - sonatype-credentials
           filters:
             branches:
               only: master
-      - sync:
+      - notify_success:
+          context:
+            - docker-credentials
+            - slack-webhook
+          requires:
+            - build
+      - notify_failure:
+          context:
+            - docker-credentials
+            - slack-webhook
           requires:
             - build
   publish_artifacts:
     jobs:
       - publish:
+          context:
+            - docker-credentials
+            - bintray-credentials
           filters:
             branches:
               only: non-existent-branch
             tags:
               only: /^v[0-9\.]+$/                                   
+      - notify_success:
+          context:
+            - docker-credentials
+            - slack-webhook
+          requires:
+            - publish
+      - notify_failure:
+          context:
+            - docker-credentials
+            - slack-webhook
+          requires:
+            - publish

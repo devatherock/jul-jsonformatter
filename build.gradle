@@ -1,7 +1,7 @@
 plugins {
-	id 'com.github.kt3k.coveralls' version '2.6.3'
-	id 'org.sonarqube' version '2.6'
-	id 'maven-publish'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'org.sonarqube' version '2.6'
+    id 'maven-publish'
     id "com.jfrog.bintray" version "1.8.4"
     id "com.jfrog.artifactory" version "4.5.4"
 }
@@ -16,139 +16,142 @@ repositories {
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 group = "io.github.devatherock"
-version = '1.0.1' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+version = '1.1.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
 
 project.ext.jsonSimpleVersion = '1.1.1'
 project.ext.gsonVersion = '2.8.5'
 project.ext.jacksonVersion = '2.9.7'
 
-test {
-	testLogging {
-		showStandardStreams = true
-		events "passed", "skipped", "failed"
-	}
-}
-
 dependencies {
     compileOnly group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
-	compileOnly group: 'com.google.code.gson', name: 'gson', version: gsonVersion
-	compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    compileOnly group: 'com.google.code.gson', name: 'gson', version: gsonVersion
+    compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 // Configurations for tests
 configurations {
-	jsonSimpleTestCompile.extendsFrom testCompile
-	jsonSimpleTestCompileOnly.extendsFrom compileOnly
-	gsonTestCompile.extendsFrom testCompile
-	gsonTestCompileOnly.extendsFrom compileOnly
-	jacksonTestCompile.extendsFrom testCompile
-	jacksonTestCompileOnly.extendsFrom compileOnly
-	customJsonTestCompile.extendsFrom testCompile
-	customJsonTestCompileOnly.extendsFrom compileOnly
+    jsonSimpleTestCompile.extendsFrom testCompile
+    jsonSimpleTestCompileOnly.extendsFrom compileOnly
+    gsonTestCompile.extendsFrom testCompile
+    gsonTestCompileOnly.extendsFrom compileOnly
+    jacksonTestCompile.extendsFrom testCompile
+    jacksonTestCompileOnly.extendsFrom compileOnly
+    customJsonTestCompile.extendsFrom testCompile
+    customJsonTestCompileOnly.extendsFrom compileOnly
 }
 
 // sourceSets for tests
 sourceSets {
     jsonSimpleTest {
-    	java {
+        java {
             srcDirs = [
-                "$projectDir/src/main/java",
-                "$projectDir/src/test/java"
+                    "$projectDir/src/main/java",
+                    "$projectDir/src/test/java"
             ]
             exclude '**/GSONFormatterTest.java'
             exclude '**/JacksonFormatterTest.java'
             exclude '**/CustomJsonConverterTest.java'
+            exclude '**/CustomKeysTest.java'
         }
-		resources.srcDir file('src/test/resources')
+        resources.srcDir file('src/test/resources')
     }
-    
+
     gsonTest {
-    	java {
+        java {
             srcDirs = [
-                "$projectDir/src/main/java",
-                "$projectDir/src/test/java"
+                    "$projectDir/src/main/java",
+                    "$projectDir/src/test/java"
             ]
             exclude '**/JSONSimpleFormatterTest.java'
             exclude '**/JacksonFormatterTest.java'
             exclude '**/CustomJsonConverterTest.java'
+            exclude '**/CustomKeysTest.java'
         }
-		resources.srcDir file('src/test/resources')
+        resources.srcDir file('src/test/resources')
     }
-    
+
     jacksonTest {
-    	java {
+        java {
             srcDirs = [
-                "$projectDir/src/main/java",
-                "$projectDir/src/test/java"
+                    "$projectDir/src/main/java",
+                    "$projectDir/src/test/java"
             ]
             exclude '**/JSONSimpleFormatterTest.java'
             exclude '**/GSONFormatterTest.java'
             exclude '**/CustomJsonConverterTest.java'
         }
-		resources.srcDir file('src/test/resources')
+        resources.srcDir file('src/test/resources')
     }
-    
+
     customJsonTest {
-    	java {
+        java {
             srcDirs = [
-                "$projectDir/src/main/java",
-                "$projectDir/src/test/java"
+                    "$projectDir/src/main/java",
+                    "$projectDir/src/test/java"
             ]
             exclude '**/JSONSimpleFormatterTest.java'
             exclude '**/GSONFormatterTest.java'
             exclude '**/JacksonFormatterTest.java'
+            exclude '**/CustomKeysTest.java'
         }
-		resources.srcDir file('src/test/resources')
+        resources.srcDir file('src/test/resources')
     }
 }
 
 // Test configuration dependencies
 dependencies {
-	jsonSimpleTestCompile group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
-	gsonTestCompile group: 'com.google.code.gson', name: 'gson', version: gsonVersion
-	jacksonTestCompile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    jsonSimpleTestCompile group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
+    gsonTestCompile group: 'com.google.code.gson', name: 'gson', version: gsonVersion
+    jacksonTestCompile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 }
 
 /** Test tasks **/
 task jsonSimpleTest(type: Test) {
-	description = "Test json-simple"
+    description = "Test json-simple"
     testClassesDirs = project.sourceSets.jsonSimpleTest.output.classesDirs
-	classpath = project.sourceSets.jsonSimpleTest.runtimeClasspath
+    classpath = project.sourceSets.jsonSimpleTest.runtimeClasspath
 }
 
 task gsonTest(type: Test) {
-	description = "Test gson"
+    description = "Test gson"
     testClassesDirs = project.sourceSets.gsonTest.output.classesDirs
-	classpath = project.sourceSets.gsonTest.runtimeClasspath
+    classpath = project.sourceSets.gsonTest.runtimeClasspath
 }
 
 task jacksonTest(type: Test) {
-	description = "Test jackson"
+    description = "Test jackson"
     testClassesDirs = project.sourceSets.jacksonTest.output.classesDirs
-	classpath = project.sourceSets.jacksonTest.runtimeClasspath
+    classpath = project.sourceSets.jacksonTest.runtimeClasspath
 }
 
 task customJsonTest(type: Test) {
-	description = "Test custom JSON"
+    description = "Test custom JSON"
     testClassesDirs = project.sourceSets.customJsonTest.output.classesDirs
-	classpath = project.sourceSets.customJsonTest.runtimeClasspath
+    classpath = project.sourceSets.customJsonTest.runtimeClasspath
+}
+
+tasks.withType(Test) {
+    testLogging {
+        showStandardStreams = true
+        events 'passed', 'skipped', 'failed'
+    }
 }
 
 /** Jacoco report task for custom test tasks **/
 task combinedJacocoReport(type: JacocoReport) {
-	dependsOn tasks.withType(Test)
-	sourceSets sourceSets.main
-	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-   
-	reports {
-		xml.enabled true
-		csv.enabled false
-		html.enabled true
-		xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
-		html.destination file("${buildDir}/reports/jacoco")
-	}
+    dependsOn tasks.withType(Test)
+    sourceSets sourceSets.main
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
+        html.destination file("${buildDir}/reports/jacoco")
+    }
 }
 
 /** SonarQube config **/

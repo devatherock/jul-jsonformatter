@@ -24,42 +24,42 @@ public class Constants {
 	/**
 	 * JSON key for log time
 	 */
-	public static String KEY_TIMESTAMP = "@timestamp";
+	public static final String KEY_TIMESTAMP = "@timestamp";
 
 	/**
 	 * JSON key for logger name
 	 */
-	public static String KEY_LOGGER_NAME = "logger_name";
+	public static final String KEY_LOGGER_NAME = "logger_name";
 
 	/**
 	 * JSON key for log level
 	 */
-	public static String KEY_LOG_LEVEL = "level";
+	public static final String KEY_LOG_LEVEL = "level";
 
 	/**
 	 * JSON key for thread name that issued the log statement
 	 */
-	public static String KEY_THREAD_NAME = "thread_name";
+	public static final String KEY_THREAD_NAME = "thread_name";
 
 	/**
 	 * JSON key for class name that issued the log statement
 	 */
-	public static String KEY_LOGGER_CLASS = "class";
+	public static final String KEY_LOGGER_CLASS = "class";
 
 	/**
 	 * JSON key for method name that issued the log statement
 	 */
-	public static  String KEY_LOGGER_METHOD = "method";
+	public static final String KEY_LOGGER_METHOD = "method";
 
 	/**
 	 * JSON key for the message being logged
 	 */
-	public static  String KEY_MESSAGE = "message";
+	public static final String KEY_MESSAGE = "message";
 
 	/**
 	 * JSON key for the exception being logged
 	 */
-	public static  String KEY_EXCEPTION = "exception";
+	public static final String KEY_EXCEPTION = "exception";
 
 	/**
 	 * JSON keys used for fields within the exception object
