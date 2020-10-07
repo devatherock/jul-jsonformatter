@@ -1,4 +1,4 @@
-[![CircleCI](https://img.shields.io/circleci/project/github/devatherock/jul-jsonformatter/master.svg)](https://circleci.com/gh/devaprasadh/jul-jsonformatter)
+[![CircleCI](https://img.shields.io/circleci/project/github/devatherock/jul-jsonformatter/master.svg)](https://app.circleci.com/pipelines/github/devatherock/jul-jsonformatter)
 [![Download](https://api.bintray.com/packages/devatherock/jul-jsonformatter/jul-jsonformatter/images/download.svg) ](https://bintray.com/devatherock/jul-jsonformatter/jul-jsonformatter/_latestVersion)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jul-jsonformatter&metric=ncloc)](https://sonarcloud.io/dashboard?id=jul-jsonformatter)
 [![Coverage Status](https://coveralls.io/repos/github/devaprasadh/jul-jsonformatter/badge.svg?branch=master)](https://coveralls.io/github/devaprasadh/jul-jsonformatter?branch=master)
