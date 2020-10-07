@@ -7,6 +7,7 @@ import static io.github.devatherock.json.formatter.helpers.Constants.KEY_LOG_LEV
 import static io.github.devatherock.json.formatter.helpers.Constants.KEY_MESSAGE;
 import static io.github.devatherock.json.formatter.helpers.Constants.KEY_THREAD_NAME;
 import static io.github.devatherock.json.formatter.helpers.Constants.KEY_TIMESTAMP;
+import static io.github.devatherock.json.formatter.helpers.Constants.KEY_EXCEPTION;
 import static io.github.devatherock.json.formatter.helpers.Constants.THREAD_NAME_CACHE_SIZE;
 
 import java.io.PrintWriter;
@@ -58,16 +59,17 @@ public class JSONFormatter extends Formatter {
 		}
 	};
 
-	private boolean useSlf4jLevelNames = false;
+	private final boolean useSlf4jLevelNames;
+	private final String timestampKey;
+	private final String loggerNameKey;
+	private final String logLevelKey;
+	private final String threadNameKey;
+	private final String loggerClassKey;
+	private final String loggerMethodKey;
+	private final String messageKey;
+	private final String exceptionKey;
 
 	public JSONFormatter() {
-		configure();
-	}
-
-	/**
-	 * Configure a {@link JSONFormatter} from LogManager properties.
-	 */
-	private void configure() {
 		LogManager manager = LogManager.getLogManager();
 		String cname = getClass().getName();
 
@@ -75,59 +77,50 @@ public class JSONFormatter extends Formatter {
 		useSlf4jLevelNames = Boolean.valueOf(value);
 
 		value = manager.getProperty(cname + ".key_timestamp");
-		if (value != null) {
-			Constants.KEY_TIMESTAMP = value;
-		}
+		timestampKey = (value != null) ? value: KEY_TIMESTAMP;
+
 		value = manager.getProperty(cname + ".key_logger_name");
-		if (value != null) {
-			Constants.KEY_LOGGER_NAME = value;
-		}
+		loggerNameKey = (value != null) ? value: KEY_LOGGER_NAME;
+
 		value = manager.getProperty(cname + ".key_log_level");
-		if (value != null) {
-			Constants.KEY_LOG_LEVEL = value;
-		}
+		logLevelKey = (value != null) ? value: KEY_LOG_LEVEL;
+
 		value = manager.getProperty(cname + ".key_thread_name");
-		if (value != null) {
-			Constants.KEY_THREAD_NAME = value;
-		}
+		threadNameKey = (value != null) ? value: KEY_THREAD_NAME;
+
 		value = manager.getProperty(cname + ".key_logger_class");
-		if (value != null) {
-			Constants.KEY_LOGGER_CLASS = value;
-		}
+		loggerClassKey = (value != null) ? value: KEY_LOGGER_CLASS;
+		
 		value = manager.getProperty(cname + ".key_logger_method");
-		if (value != null) {
-			Constants.KEY_LOGGER_METHOD = value;
-		}
+		loggerMethodKey = (value != null) ? value: KEY_LOGGER_METHOD;
+		
 		value = manager.getProperty(cname + ".key_message");
-		if (value != null) {
-			Constants.KEY_MESSAGE = value;
-		}
+		messageKey = (value != null) ? value: KEY_MESSAGE;
+		
 		value = manager.getProperty(cname + ".key_exception");
-		if (value != null) {
-			Constants.KEY_EXCEPTION = value;
-		}
+		exceptionKey = (value != null) ? value: KEY_EXCEPTION;
 	}
 
 	@Override
 	public String format(LogRecord record) {
 		Map<String, Object> object = new LinkedHashMap<>();
-		object.put(KEY_TIMESTAMP, Constants.ISO_8601_FORMAT.format(Instant.ofEpochMilli(record.getMillis())));
-		object.put(KEY_LOGGER_NAME, record.getLoggerName());
+		object.put(timestampKey, Constants.ISO_8601_FORMAT.format(Instant.ofEpochMilli(record.getMillis())));
+		object.put(loggerNameKey, record.getLoggerName());
 		if (useSlf4jLevelNames) {
-			object.put(KEY_LOG_LEVEL, renameLogLevel(record.getLevel().getName()));
+			object.put(logLevelKey, renameLogLevel(record.getLevel().getName()));
 		} else {
-			object.put(KEY_LOG_LEVEL, record.getLevel().getName());
+			object.put(logLevelKey, record.getLevel().getName());
 		}
-		object.put(KEY_THREAD_NAME, getThreadName(record.getThreadID()));
+		object.put(threadNameKey, getThreadName(record.getThreadID()));
 
 		if (null != record.getSourceClassName()) {
-			object.put(KEY_LOGGER_CLASS, record.getSourceClassName());
+			object.put(loggerClassKey, record.getSourceClassName());
 		}
 
 		if (null != record.getSourceMethodName()) {
-			object.put(KEY_LOGGER_METHOD, record.getSourceMethodName());
+			object.put(loggerMethodKey, record.getSourceMethodName());
 		}
-		object.put(KEY_MESSAGE, formatMessage(record));
+		object.put(messageKey, formatMessage(record));
 
 		// Used an enum map for lighter memory consumption
 		if (null != record.getThrown()) {
@@ -143,7 +136,7 @@ public class JSONFormatter extends Formatter {
 			record.getThrown().printStackTrace(pw);
 			pw.close();
 			exceptionInfo.put(ExceptionKeys.stack_trace, sw.toString());
-			object.put("exception", exceptionInfo);
+			object.put(exceptionKey, exceptionInfo);
 		}
 
 		return CONVERTER.convertToJson(object);

@@ -29,11 +29,23 @@ public class TestUtil {
 	public static final Pattern TIMESTAMP_PATTERN = Pattern.compile(
 			"[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}([Z]{1}|[-+]{1}[0-9]{2}:[0-5]{1}[0-9]{1})");
 
+	/**
+	 * Loads config from a file named {@code logging.properties} in class path
+	 */
 	public static void loadLoggingConfig() {
-		try (InputStream inputStream = TestUtil.class.getClassLoader().getResourceAsStream("logging.properties");) {
+		loadLoggingConfig("logging.properties");
+	}
+
+	/**
+	 * Loads the specified config file from class path
+	 *
+	 * @param configFile
+	 */
+	public static void loadLoggingConfig(String configFile) {
+		try (InputStream inputStream = TestUtil.class.getClassLoader().getResourceAsStream(configFile);) {
 			LogManager.getLogManager().readConfiguration(inputStream);
 		} catch (IOException e) {
-			Logger.getAnonymousLogger().severe("Could not load logging.properties file");
+			Logger.getAnonymousLogger().severe(String.format("Could not load %s file", configFile));
 			Logger.getAnonymousLogger().severe(e.getMessage());
 		}
 	}
@@ -90,8 +102,19 @@ public class TestUtil {
 	 * @param jsonMap
 	 */
 	public static void verifyExceptionWithMessage(Exception exception, Map<String, Object> jsonMap) {
-		assertNotNull(jsonMap.get(Constants.KEY_EXCEPTION));
-		Map<String, Object> exceptionMap = (Map<String, Object>) jsonMap.get(Constants.KEY_EXCEPTION);
+		verifyExceptionWithMessage(Constants.KEY_EXCEPTION, exception, jsonMap);
+	}
+
+	/**
+	 * Verifies the logged exception object for an exception with message
+	 *
+	 * @param exceptionKey
+	 * @param exception
+	 * @param jsonMap
+	 */
+	public static void verifyExceptionWithMessage(String exceptionKey, Exception exception, Map<String, Object> jsonMap) {
+		assertNotNull(jsonMap.get(exceptionKey));
+		Map<String, Object> exceptionMap = (Map<String, Object>) jsonMap.get(exceptionKey);
 		assertEquals(exception.getClass().getName(), exceptionMap.get(ExceptionKeys.exception_class.name()));
 		assertEquals(exception.getMessage(), exceptionMap.get(ExceptionKeys.exception_message.name()));
 		assertTrue(exceptionMap.containsKey(ExceptionKeys.stack_trace.name()));
