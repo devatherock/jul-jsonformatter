@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.1.0] - 2020-10-06
 ### Added
 - Ability to customize JSON field keys(#7)
 
