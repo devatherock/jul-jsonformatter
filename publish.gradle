@@ -1,10 +1,10 @@
 task javadocJar(type: Jar) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from javadoc
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from sourceSets.main.allSource
 }
 
@@ -36,28 +36,30 @@ def pomConfig = {
 }
 
 def projectDescription = 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash'
-publishing {
-    publications {
-        mavenPublication(MavenPublication) {
-         	from components.java
-            artifact sourcesJar {
-                classifier "sources"
-            }
-            artifact javadocJar {
-                classifier "javadoc"
-            }
-            groupId "${project.group}"
-            artifactId "${project.name}"
-            version "${project.version}"
-            pom.withXml {
-                def root = asNode()
-                root.appendNode('description', projectDescription)
-                root.appendNode('name', "${project.name}")
-                root.appendNode('url', 'https://github.com/devatherock/jul-jsonformatter')
-                root.children().last() + pomConfig
-            }
-        }
-    }
+project.afterEvaluate {
+	publishing {
+		publications {
+			mavenPublication(MavenPublication) {
+				from components.java
+				artifact sourcesJar {
+					classifier "sources"
+				}
+				artifact javadocJar {
+					classifier "javadoc"
+				}
+				groupId "${project.group}"
+				artifactId "${project.name}"
+				version "${project.version}"
+				pom.withXml {
+					def root = asNode()
+					root.appendNode('description', projectDescription)
+					root.appendNode('name', "${project.name}")
+					root.appendNode('url', 'https://github.com/devatherock/jul-jsonformatter')
+					root.children().last() + pomConfig
+				}
+			}
+		}
+	}
 }
 
 /** Publish to bintray **/
