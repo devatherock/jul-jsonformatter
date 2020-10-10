@@ -163,6 +163,14 @@ sonarqube {
     }
 }
 
+tasks['sonarqube'].with {
+	dependsOn.clear()
+	dependsOn jsonSimpleTest
+	dependsOn gsonTest
+	dependsOn jacksonTest
+	dependsOn customJsonTest
+}
+
 check.dependsOn jsonSimpleTest
 check.dependsOn gsonTest
 check.dependsOn jacksonTest
