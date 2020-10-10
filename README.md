@@ -1,7 +1,7 @@
 [![CircleCI](https://img.shields.io/circleci/project/github/devatherock/jul-jsonformatter/master.svg)](https://app.circleci.com/pipelines/github/devatherock/jul-jsonformatter)
 [![Download](https://api.bintray.com/packages/devatherock/jul-jsonformatter/jul-jsonformatter/images/download.svg) ](https://bintray.com/devatherock/jul-jsonformatter/jul-jsonformatter/_latestVersion)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jul-jsonformatter&metric=ncloc)](https://sonarcloud.io/dashboard?id=jul-jsonformatter)
-[![Coverage Status](https://coveralls.io/repos/github/devaprasadh/jul-jsonformatter/badge.svg?branch=master)](https://coveralls.io/github/devaprasadh/jul-jsonformatter?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/devatherock/jul-jsonformatter/badge.svg?branch=master)](https://coveralls.io/github/devatherock/jul-jsonformatter?branch=master)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jul-jsonformatter&metric=bugs)](https://sonarcloud.io/dashboard?id=jul-jsonformatter)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jul-jsonformatter&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=jul-jsonformatter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

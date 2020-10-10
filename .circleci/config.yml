@@ -1,6 +1,6 @@
 openjdk_image: &openjdk_image
   docker:
-    - image: circleci/openjdk:8-jdk
+    - image: openjdk:11-slim
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
@@ -114,6 +114,7 @@ workflows:
           context:
             - docker-credentials
             - bintray-credentials
+            - sonar-credentials
           filters:
             branches:
               only: master
