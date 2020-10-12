@@ -9,6 +9,22 @@
 [Formatter](https://docs.oracle.com/javase/7/docs/api/java/util/logging/Formatter.html) to log `java.util.logging(JUL)` messages as JSON, compatible with [Logstash](https://www.elastic.co/products/logstash)
 
 ## Usage
+- Include the dependency
+
+For Maven:
+```xml
+<dependency>
+    <groupId>io.github.devatherock</groupId>
+    <artifactId>jul-jsonformatter</artifactId>
+    <version>1.1.0</version>
+</dependency>
+```
+
+For Gradle:
+```groovy
+compile group: 'io.github.devatherock', name: 'jul-jsonformatter', version: '1.1.0'
+```
+
 - Include any one of [Gson](https://mvnrepository.com/artifact/com.google.code.gson/gson/2.8.5), [Jackson](https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind/2.9.7) or [json-simple](https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple/1.1.1) libraries in classpath
 - Include a `logging.properties` file in classpath with `io.github.devatherock.json.formatter.JSONFormatter` as the formatter
 
