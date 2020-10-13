@@ -1,80 +1,31 @@
-openjdk_image: &openjdk_image
-  docker:
-    - image: openjdk:11-slim
-      auth:
-        username: $DOCKER_USERNAME
-        password: $DOCKER_PASSWORD
-
 slack_image: &slack_image
   docker:
     - image: devatherock/simple-slack:0.4.0
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
+       
+orbs:
+  gradle: circleci/gradle@2.2.0
 
 work_directory: &work_directory
   working_directory: ~/jul-jsonformatter
 
 resource_class: &resource_class
   resource_class: small
+  
+executors:
+  jdk-executor:
+    docker:
+      - image: cimg/openjdk:11.0
+        auth:
+          username: $DOCKER_USERNAME
+          password: $DOCKER_PASSWORD
+    <<: *resource_class
+    <<: *work_directory
 
 version: 2.1
 jobs:
-  test:
-    <<: *openjdk_image
-    <<: *resource_class
-    <<: *work_directory
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
-      - run: |
-          ./gradlew check coveralls -x test
-      - store_test_results:
-          path: build/test-results
-
-  build:
-    <<: *openjdk_image
-    <<: *resource_class
-    <<: *work_directory
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
-      - run: ./gradlew build artifactoryPublish coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-      - store_artifacts:
-          path: build/libs
-      - store_artifacts:
-          path: build/reports/tests
-      - store_artifacts:
-          path: build/reports/jacoco    
-      - store_test_results:
-          path: build/test-results
-
-  publish:
-    <<: *openjdk_image
-    <<: *resource_class
-    <<: *work_directory
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies-
-      - run: ./gradlew build bintrayUpload -x test
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-
   notify_success:
     <<: *slack_image
     <<: *resource_class
@@ -103,14 +54,17 @@ workflows:
   version: 2.1
   build_test:
     jobs:
-      - test:
+      - gradle/test:
+          executor: jdk-executor
           context:
             - docker-credentials
           filters:
             branches:
               ignore: 
                 - master
-      - build:
+          test_command: check coveralls -x test
+      - gradle/run:
+          executor: jdk-executor
           context:
             - docker-credentials
             - bintray-credentials
@@ -118,21 +72,23 @@ workflows:
           filters:
             branches:
               only: master
+          command: build artifactoryPublish coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
       - notify_success:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - build
+            - gradle/run
       - notify_failure:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - build
+            - gradle/run
   publish_artifacts:
     jobs:
-      - publish:
+      - gradle/run:
+          executor: jdk-executor
           context:
             - docker-credentials
             - bintray-credentials
@@ -141,16 +97,17 @@ workflows:
             branches:
               only: non-existent-branch
             tags:
-              only: /^v[0-9\.]+$/                                   
+              only: /^v[0-9\.]+$/
+          command: build bintrayUpload -x test
       - notify_success:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - publish
+            - gradle/run
       - notify_failure:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - publish
+            - gradle/run
