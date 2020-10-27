@@ -162,7 +162,7 @@ public class CustomJsonConverterTest {
 	 * @param logLevel
 	 */
 	private void verifyJson(Logger logger, String message, String actualLogLine, String methodName, String logLevel) {
-		assertTrue(actualLogLine.contains(Constants.KEY_TIMESTAMP));
+		assertTrue(actualLogLine.contains(new Constants().KEY_TIMESTAMP));
 		assertTrue(actualLogLine.contains(Constants.KEY_LOGGER_NAME));
 		assertTrue(actualLogLine.contains(Constants.KEY_LOG_LEVEL));
 		assertTrue(actualLogLine.contains(Constants.KEY_THREAD_NAME));

@@ -6,18 +6,17 @@ plugins {
 	id 'com.github.kt3k.coveralls' version '2.10.2'
 	id 'com.jfrog.bintray' version '1.8.5'
 	id 'com.jfrog.artifactory' version '4.15.1'
-}
-
-apply from: 'publish.gradle'
-
-repositories {
-	jcenter()
+	id 'com.palantir.jacoco-coverage' version '0.4.0'
 }
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 group = "io.github.devatherock"
 version = '1.2.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+
+repositories {
+	jcenter()
+}
 
 project.ext.jsonSimpleVersion = '1.1.1'
 project.ext.gsonVersion = '2.8.5'
@@ -133,46 +132,5 @@ task customJsonTest(type: Test) {
 	classpath = project.sourceSets.customJsonTest.runtimeClasspath
 }
 
-tasks.withType(Test) {
-	testLogging {
-		showStandardStreams = true
-		events 'passed', 'skipped', 'failed'
-	}
-}
-
-/** Jacoco report task for custom test tasks **/
-task combinedJacocoReport(type: JacocoReport) {
-	dependsOn tasks.withType(Test)
-	sourceSets sourceSets.main
-	executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
-
-	reports {
-		xml.enabled true
-		csv.enabled false
-		html.enabled true
-		xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml") // Required for coveralls
-		html.destination file("${buildDir}/reports/jacoco")
-	}
-}
-
-/** SonarQube config **/
-sonarqube {
-	properties {
-		property 'sonar.jacoco.reportPaths', 'build/jacoco/customJsonTest.exec,build/jacoco/gsonTest.exec,build/jacoco/jacksonTest.exec,build/jacoco/jsonSimpleTest.exec'
-		property 'sonar.junit.reportPaths', 'build/test-results/customJsonTest,build/test-results/gsonTest,build/test-results/jacksonTest,build/test-results/jsonSimpleTest'
-	}
-}
-
-tasks['sonarqube'].with {
-	dependsOn.clear()
-	dependsOn jsonSimpleTest
-	dependsOn gsonTest
-	dependsOn jacksonTest
-	dependsOn customJsonTest
-}
-
-check.dependsOn jsonSimpleTest
-check.dependsOn gsonTest
-check.dependsOn jacksonTest
-check.dependsOn customJsonTest
-check.dependsOn combinedJacocoReport
+apply from: 'publish.gradle'
+apply from: 'checks.gradle'

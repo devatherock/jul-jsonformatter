@@ -1,0 +1,61 @@
+tasks.withType(Test) {
+    testLogging {
+        showStandardStreams = true
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+/** Jacoco report task for custom test tasks **/
+task combinedJacocoReport(type: JacocoReport) {
+    dependsOn tasks.withType(Test)
+    sourceSets sourceSets.main
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml") // Required for coveralls and sonar
+        html.destination file("${buildDir}/reports/jacoco")
+    }
+}
+
+jacocoCoverage {
+    reportThreshold 0.0
+    packageThreshold 0.0
+    classThreshold 1.0
+
+    classThreshold 0.81, BRANCH, 'io/github/devatherock/json/formatter/JSONFormatter'
+    classThreshold 0.74, COMPLEXITY, 'io/github/devatherock/json/formatter/JSONFormatter'
+    classThreshold 0.96, INSTRUCTION, 'io/github/devatherock/json/formatter/JSONFormatter'
+    classThreshold 0.94, LINE, 'io/github/devatherock/json/formatter/JSONFormatter'
+
+    classThreshold 0.5, BRANCH, 'io/github/devatherock/json/formatter/JSONFormatter$1'
+    classThreshold 0.66, COMPLEXITY, 'io/github/devatherock/json/formatter/JSONFormatter$1'
+    classThreshold 0.81, INSTRUCTION, 'io/github/devatherock/json/formatter/JSONFormatter$1'
+
+    classThreshold 0.82, INSTRUCTION, 'io/github/devatherock/json/formatter/helpers/JacksonJsonConverter'
+    classThreshold 0.6, LINE, 'io/github/devatherock/json/formatter/helpers/JacksonJsonConverter'
+}
+
+/** SonarQube config **/
+sonarqube {
+    properties {
+        property 'sonar.jacoco.reportPaths', 'build/jacoco/customJsonTest.exec,build/jacoco/gsonTest.exec,build/jacoco/jacksonTest.exec,build/jacoco/jsonSimpleTest.exec'
+        property 'sonar.junit.reportPaths', 'build/test-results/customJsonTest,build/test-results/gsonTest,build/test-results/jacksonTest,build/test-results/jsonSimpleTest'
+    }
+}
+
+tasks['sonarqube'].with {
+    dependsOn.clear()
+    dependsOn jsonSimpleTest
+    dependsOn gsonTest
+    dependsOn jacksonTest
+    dependsOn customJsonTest
+}
+
+check.dependsOn jsonSimpleTest
+check.dependsOn gsonTest
+check.dependsOn jacksonTest
+check.dependsOn customJsonTest
+check.dependsOn combinedJacocoReport
