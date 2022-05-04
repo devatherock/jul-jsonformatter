@@ -1,13 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
 plugins {
 	id 'java'
 	id 'maven-publish'
 	id 'jacoco'
 	id 'org.sonarqube' version '3.0'
 	id 'com.github.kt3k.coveralls' version '2.10.2'
-	id 'com.jfrog.bintray' version '1.8.5'
-	id 'com.jfrog.artifactory' version '4.15.1'
 	id 'com.palantir.jacoco-coverage' version '0.4.0'
+    id 'io.codearte.nexus-staging' version '0.30.0'
 }
+apply plugin: 'com.bmuschko.nexus'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -15,7 +24,7 @@ group = "io.github.devatherock"
 version = '1.2.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
 
 repositories {
-	jcenter()
+	mavenCentral()
 }
 
 project.ext.jsonSimpleVersion = '1.1.1'

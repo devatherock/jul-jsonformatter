@@ -72,7 +72,7 @@ workflows:
           filters:
             branches:
               only: master
-          command: build artifactoryPublish coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
+          command: build uploadArchives coveralls sonarqube -PnexusUsername=$SONATYPE_USERNAME -PnexusPassword=$SONATYPE_PASSWORD -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
       - notify_success:
           context:
             - docker-credentials
@@ -98,7 +98,7 @@ workflows:
               only: non-existent-branch
             tags:
               only: /^v[0-9\.]+$/
-          command: build bintrayUpload -x test
+          command: build uploadArchives closeAndReleaseRepository -PnexusUsername=$SONATYPE_USERNAME -PnexusPassword=$SONATYPE_PASSWORD -x test
       - notify_success:
           context:
             - docker-credentials
