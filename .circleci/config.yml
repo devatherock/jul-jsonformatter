@@ -1,6 +1,6 @@
 slack_image: &slack_image
   docker:
-    - image: devatherock/simple-slack:0.4.0
+    - image: devatherock/simple-slack:0.7.0
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
@@ -14,6 +14,11 @@ work_directory: &work_directory
 resource_class: &resource_class
   resource_class: small
   
+pr_filter: &pr_filter
+  filters:
+    branches:
+      ignore: master
+  
 executors:
   jdk-executor:
     docker:
@@ -26,88 +31,83 @@ executors:
 
 version: 2.1
 jobs:
-  notify_success:
+  changelog_updater:
+    docker:
+    - image: devatherock/changelog-updater:latest
+      auth:
+        username: $DOCKER_USERNAME
+        password: $DOCKER_PASSWORD
+    <<: *resource_class
+    environment:
+      VELA_BUILD_AUTHOR_EMAIL: "bot@renovateapp.com"
+    steps:
+      - checkout
+      - run: sh /scripts/entry-point.sh
+
+  notify:
     <<: *slack_image
     <<: *resource_class
     environment:
       TEXT: "Success: {{.CircleBuildUrl}} by {{.CircleUsername}}"
-      COLOR: "#33ad7f"
       CHANNEL: general
       TITLE: "Build completed"
     steps:
-      - run: /bin/simpleslack
-  notify_failure:
-    <<: *slack_image
-    <<: *resource_class
-    environment:
-      TEXT: "Failure: {{.CircleBuildUrl}} by {{.CircleUsername}}"
-      COLOR: "#a1040c"
-      CHANNEL: general
-      TITLE: "Build completed"
-    steps:
-      - run:
-          name: Failure notification
-          command: /bin/simpleslack
-          when: on_fail
+      - run: /bin/simpleslack -c "#33ad7f" || true          
            
 workflows:
   version: 2.1
   build_test:
     jobs:
-      - gradle/test:
-          executor: jdk-executor
-          context:
-            - docker-credentials
-          filters:
-            branches:
-              ignore: 
-                - master
-          test_command: check coveralls -x test
       - gradle/run:
+          name: build
           executor: jdk-executor
           context:
             - docker-credentials
-            - bintray-credentials
+            - sonatype-credentials
             - sonar-credentials
           filters:
             branches:
               only: master
-          command: build artifactoryPublish coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
-      - notify_success:
+          command: build publishToSonatype coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
+      - notify:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - gradle/run
-      - notify_failure:
-          context:
-            - docker-credentials
-            - slack-webhook
-          requires:
-            - gradle/run
+            - build
   publish_artifacts:
     jobs:
       - gradle/run:
+          name: publish
           executor: jdk-executor
           context:
             - docker-credentials
-            - bintray-credentials
             - sonatype-credentials
           filters:
             branches:
               only: non-existent-branch
             tags:
               only: /^v[0-9\.]+$/
-          command: build bintrayUpload -x test
-      - notify_success:
+          command: build publishToSonatype -x test
+      - notify:
           context:
             - docker-credentials
             - slack-webhook
           requires:
-            - gradle/run
-      - notify_failure:
+            - publish
+  pr_check:
+    jobs:
+      - changelog_updater:
           context:
             - docker-credentials
-            - slack-webhook
+            - changelog-updater-credentials
+          <<: *pr_filter
+      - gradle/test:
+          name: test
+          executor: jdk-executor
+          context:
+            - docker-credentials
+          <<: *pr_filter
+          test_command: check coveralls -x test
           requires:
-            - gradle/run
+            - changelog_updater
