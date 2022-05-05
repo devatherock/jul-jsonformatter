@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+### Added
+- Dependency check plugin
+
+### Changed
+- Publication of artifacts to Sonatype Nexus due to bintray sunset
+- Upgraded dependency versions
+
 ## [1.1.0] - 2020-10-06
 ### Added
 - Ability to customize JSON field keys(#7)

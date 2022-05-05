@@ -54,8 +54,21 @@ tasks['sonarqube'].with {
     dependsOn customJsonTest
 }
 
+/** Dependency check plugin config **/
+dependencyCheck {
+    data {
+        directory = "${System.getProperty('user.home')}${System.properties['file.separator']}.gradle"
+    }
+    analyzers {
+        assemblyEnabled = false
+    }
+    failBuildOnCVSS = 7
+    cveValidForHours = 24
+}
+
 check.dependsOn jsonSimpleTest
 check.dependsOn gsonTest
 check.dependsOn jacksonTest
 check.dependsOn customJsonTest
 check.dependsOn combinedJacocoReport
+check.dependsOn dependencyCheckAggregate
