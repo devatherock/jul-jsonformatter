@@ -4,9 +4,6 @@ slack_image: &slack_image
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
-       
-orbs:
-  gradle: circleci/gradle@2.2.0
 
 work_directory: &work_directory
   working_directory: ~/jul-jsonformatter
@@ -43,6 +40,51 @@ jobs:
     steps:
       - checkout
       - run: sh /scripts/entry-point.sh
+      
+  test:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/jul-jsonformatter
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies
+      - run: |
+          ./gradlew check coveralls -x test
+      - store_test_results:
+          path: build/test-results
+  build:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/jul-jsonformatter
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies
+      - run: |
+          ./gradlew build publishToSonatype coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle" }}
+      - store_test_results:
+          path: build/test-results
+  publish:
+    executor: jdk-executor
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/jul-jsonformatter
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            - v1-dependencies
+      - run: |
+          ./gradlew build publishToSonatype -x test
 
   notify:
     <<: *slack_image
@@ -58,9 +100,7 @@ workflows:
   version: 2.1
   build_test:
     jobs:
-      - gradle/run:
-          name: build
-          executor: jdk-executor
+      - build:
           context:
             - docker-credentials
             - sonatype-credentials
@@ -68,7 +108,6 @@ workflows:
           filters:
             branches:
               only: master
-          command: build publishToSonatype coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
       - notify:
           context:
             - docker-credentials
@@ -77,9 +116,7 @@ workflows:
             - build
   publish_artifacts:
     jobs:
-      - gradle/run:
-          name: publish
-          executor: jdk-executor
+      - publish:
           context:
             - docker-credentials
             - sonatype-credentials
@@ -88,7 +125,6 @@ workflows:
               only: non-existent-branch
             tags:
               only: /^v[0-9\.]+$/
-          command: build publishToSonatype -x test
       - notify:
           context:
             - docker-credentials
@@ -102,12 +138,9 @@ workflows:
             - docker-credentials
             - changelog-updater-credentials
           <<: *pr_filter
-      - gradle/test:
-          name: test
-          executor: jdk-executor
+      - test:
           context:
             - docker-credentials
           <<: *pr_filter
-          test_command: check coveralls -x test
           requires:
             - changelog_updater

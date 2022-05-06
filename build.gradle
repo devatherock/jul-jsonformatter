@@ -12,16 +12,24 @@ plugins {
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
-group = "io.github.devatherock"
-version = '1.2.0' + (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
+group = 'io.github.devatherock'
+description = 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash'
+version = (System.env.CIRCLE_TAG ? System.env.CIRCLE_TAG.substring(1): '1.2.0') +
+        (Boolean.valueOf(System.getProperty("snapshot")) ? "-SNAPSHOT" : "")
 
 repositories {
     mavenCentral()
 }
 
-project.ext.jsonSimpleVersion = '1.1.1'
-project.ext.gsonVersion = '2.9.0'
-project.ext.jacksonVersion = '2.13.2.2'
+ext {
+    jsonSimpleVersion = '1.1.1'
+    gsonVersion = '2.9.0'
+    jacksonVersion = '2.13.2.2'
+    
+    // Properties for publishing
+    licenseUrl = 'https://github.com/devatherock/jul-jsonformatter/blob/master/LICENSE.txt'
+    scmUrl = 'https://github.com/devatherock/jul-jsonformatter/'
+}
 
 dependencies {
     compileOnly group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion

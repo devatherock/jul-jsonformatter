@@ -7,6 +7,8 @@
 ### Changed
 - Publication of artifacts to Sonatype Nexus due to bintray sunset
 - Upgraded dependency versions
+- Made `publish.gradle` generic so that it can be moved to `gradle-includes`
+- Refactored CI pipeline with proper gradle caching
 
 ## [1.1.0] - 2020-10-06
 ### Added
