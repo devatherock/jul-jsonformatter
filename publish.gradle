@@ -17,8 +17,8 @@ artifacts {
 def pomConfig = {
     licenses {
         license {
-            name 'MIT License'
-            url 'https://github.com/devatherock/jul-jsonformatter/blob/master/LICENSE.txt'
+            name (project.ext.has('licenseType') ? project['licenseType'] : 'MIT License')
+            url (project.ext.has('licenseUrl') ? project['licenseUrl'] : 'https://mit-license.org/')
         }
     }
 
@@ -31,11 +31,10 @@ def pomConfig = {
     }
 
     scm {
-        url 'https://github.com/devatherock/jul-jsonformatter/'
+        url project['scmUrl']
     }
 }
 
-def projectDescription = 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash'
 project.afterEvaluate {
 	publishing {
 		publications {
@@ -52,9 +51,9 @@ project.afterEvaluate {
 				version "${project.version}"
 				pom.withXml {
 					def root = asNode()
-					root.appendNode('description', projectDescription)
-					root.appendNode('name', "${project.name}")
-					root.appendNode('url', 'https://github.com/devatherock/jul-jsonformatter')
+					root.appendNode('description', project.description)
+					root.appendNode('name', project.name)
+					root.appendNode('url', project['scmUrl'])
 					root.children().last() + pomConfig
 				}
 			}
