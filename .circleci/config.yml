@@ -38,6 +38,9 @@ jobs:
     environment:
       VELA_BUILD_AUTHOR_EMAIL: "bot@renovateapp.com"
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "4a:86:fe:0e:c3:0e:ad:0d:1d:5c:3e:48:cf:28:39:5d"      
       - checkout
       - run: sh /scripts/entry-point.sh
       
