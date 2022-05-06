@@ -119,5 +119,5 @@ for(int index = 0; index < testSourceSetNames.size(); index++) {
     }
 }
 
-apply from: 'publish.gradle'
+apply from: 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/publish.gradle'
 apply from: 'checks.gradle'
