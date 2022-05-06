@@ -84,7 +84,7 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies
       - run: |
-          ./gradlew build publishToSonatype -x test
+          ./gradlew build publishToSonatype closeAndReleaseSonatypeStagingRepository -x check
 
   notify:
     <<: *slack_image

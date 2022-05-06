@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 ### Added
+- gradle task to release to maven central
+
+### Changed
+- Used externalized `publish.gradle`
+
+## [1.2.0] - 2022-05-05
+### Added
 - Dependency check plugin
 
 ### Changed
