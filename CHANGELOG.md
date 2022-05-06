@@ -7,6 +7,7 @@
 ### Changed
 - Used externalized `publish.gradle`
 - Configure Renovate
+- chore: Used custom ssh key to push to github
 
 ## [1.2.0] - 2022-05-05
 ### Added
