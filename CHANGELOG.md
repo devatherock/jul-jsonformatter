@@ -6,6 +6,7 @@
 
 ### Changed
 - Used externalized `publish.gradle`
+- Configure Renovate
 
 ## [1.2.0] - 2022-05-05
 ### Added
