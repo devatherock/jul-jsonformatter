@@ -8,6 +8,7 @@
 - Used externalized `publish.gradle`
 - Configure Renovate
 - chore: Used custom ssh key to push to github
+- chore(deps): update plugin org.owasp.dependencycheck to v7.1.0.1
 
 ## [1.2.0] - 2022-05-05
 ### Added
