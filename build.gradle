@@ -24,7 +24,7 @@ repositories {
 ext {
     jsonSimpleVersion = '1.1.1'
     gsonVersion = '2.9.0'
-    jacksonVersion = '2.13.2.2'
+    jacksonVersion = '2.13.3'
     
     // Properties for publishing
     licenseUrl = 'https://github.com/devatherock/jul-jsonformatter/blob/master/LICENSE.txt'
