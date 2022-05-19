@@ -30,7 +30,7 @@ version: 2.1
 jobs:
   changelog_updater:
     docker:
-    - image: devatherock/changelog-updater:latest
+    - image: devatherock/changelog-updater:0.1.0
       auth:
         username: $DOCKER_USERNAME
         password: $DOCKER_PASSWORD
