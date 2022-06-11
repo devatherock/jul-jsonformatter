@@ -10,6 +10,7 @@
 - chore: Used custom ssh key to push to github
 - chore(deps): update plugin org.owasp.dependencycheck to v7.1.0.1
 - chore(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.3
+- chore(deps): update plugin org.sonarqube to v3.4.0.2513
 
 ## [1.2.0] - 2022-05-05
 ### Added
