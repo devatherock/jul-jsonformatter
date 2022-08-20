@@ -13,6 +13,7 @@
 - chore(deps): update plugin org.sonarqube to v3.4.0.2513
 - chore(deps): update plugin org.owasp.dependencycheck to v7.1.1
 - chore(deps): update dependency com.google.code.gson:gson to v2.9.1
+- chore(deps): update plugin org.owasp.dependencycheck to v7.1.2
 
 ## [1.2.0] - 2022-05-05
 ### Added
