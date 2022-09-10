@@ -36,7 +36,7 @@ jobs:
         password: $DOCKER_PASSWORD
     <<: *resource_class
     environment:
-      VELA_BUILD_AUTHOR_EMAIL: "bot@renovateapp.com"
+      VELA_BUILD_AUTHOR_EMAIL: "29139614+renovate[bot]@users.noreply.github.com"
     steps:
       - add_ssh_keys:
           fingerprints:
