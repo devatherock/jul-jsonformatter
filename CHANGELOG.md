@@ -14,6 +14,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v7.1.1
 - chore(deps): update dependency com.google.code.gson:gson to v2.9.1
 - chore(deps): update plugin org.owasp.dependencycheck to v7.1.2
+- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.4
 
 ## [1.2.0] - 2022-05-05
 ### Added
