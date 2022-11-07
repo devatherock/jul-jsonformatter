@@ -16,6 +16,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v7.1.2
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.4
 - chore(deps): update plugin org.owasp.dependencycheck to v7.3.0
+- chore(deps): update dependency gradle to v6.9.3
 
 ## [1.2.0] - 2022-05-05
 ### Added
