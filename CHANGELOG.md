@@ -19,6 +19,7 @@
 - chore(deps): update dependency gradle to v6.9.3
 - chore(deps): update plugin org.sonarqube to v3.5.0.2730
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.0
+- fix(deps): update dependency com.google.code.gson:gson to v2.10
 
 ## [1.2.0] - 2022-05-05
 ### Added
