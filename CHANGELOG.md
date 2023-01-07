@@ -26,6 +26,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.0
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.1
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.3
+- chore(deps): update plugin org.owasp.dependencycheck to v7.4.4
 
 ## [1.2.0] - 2022-05-05
 ### Added
