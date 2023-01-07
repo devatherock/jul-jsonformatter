@@ -27,6 +27,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.1
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.3
 - chore(deps): update plugin org.owasp.dependencycheck to v7.4.4
+- fix(deps): update dependency com.google.code.gson:gson to v2.10.1
 
 ## [1.2.0] - 2022-05-05
 ### Added
