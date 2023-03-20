@@ -64,6 +64,7 @@ dependencyCheck {
     }
     failBuildOnCVSS = 7
     cveValidForHours = 24
+    suppressionFile = 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/config/dependency-check-suppressions.xml'
 }
 
 check.dependsOn jsonSimpleTest
