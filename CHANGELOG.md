@@ -33,6 +33,7 @@
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.2
 - chore(deps): update plugin org.owasp.dependencycheck to v8.1.2
 - chore(deps): update plugin com.github.kt3k.coveralls to v2.12.2
+- chore(deps): update plugin io.github.gradle-nexus.publish-plugin to v1.3.0
 
 ## [1.2.0] - 2022-05-05
 ### Added
