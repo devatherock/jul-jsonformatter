@@ -1,9 +1,8 @@
 package io.github.devatherock.json.formatter.helpers;
 
-import io.github.devatherock.json.formatter.testhelpers.TestUtil;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -14,14 +13,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import io.github.devatherock.json.formatter.testhelpers.TestUtil;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for {@code JSONFormatter} with custom keys
@@ -62,7 +63,7 @@ public class CustomKeysTest {
         List<String> logLevels = Arrays.asList("INFO", "WARNING", "SEVERE");
         List<String> outputLevels = Arrays.asList("INFO", "WARN", "ERROR");
 
-        for(int index = 0; index < logLevels.size(); index++) {
+        for (int index = 0; index < logLevels.size(); index++) {
             Logger logger = Logger.getLogger(JacksonFormatterTest.class.getName());
             Exception exception = new RuntimeException("test exception");
 

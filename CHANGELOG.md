@@ -3,41 +3,19 @@
 ## [Unreleased]
 ### Added
 - gradle task to release to maven central
+- Spotless plugin
 
 ### Changed
 - Used externalized `publish.gradle`
 - Configure Renovate
 - chore: Used custom ssh key to push to github
-- chore(deps): update plugin org.owasp.dependencycheck to v7.1.0.1
-- chore(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.3
-- chore(deps): update plugin org.sonarqube to v3.4.0.2513
-- chore(deps): update plugin org.owasp.dependencycheck to v7.1.1
-- chore(deps): update dependency com.google.code.gson:gson to v2.9.1
-- chore(deps): update plugin org.owasp.dependencycheck to v7.1.2
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.13.4
-- chore(deps): update plugin org.owasp.dependencycheck to v7.3.0
-- chore(deps): update dependency gradle to v6.9.3
-- chore(deps): update plugin org.sonarqube to v3.5.0.2730
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.0
-- fix(deps): update dependency com.google.code.gson:gson to v2.10
-- chore(deps): update plugin org.owasp.dependencycheck to v7.3.2
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.1
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.1
-- chore(deps): update plugin org.owasp.dependencycheck to v7.4.0
-- chore(deps): update plugin org.owasp.dependencycheck to v7.4.1
-- chore(deps): update plugin org.owasp.dependencycheck to v7.4.3
-- chore(deps): update plugin org.owasp.dependencycheck to v7.4.4
 - fix(deps): update dependency com.google.code.gson:gson to v2.10.1
-- chore(deps): update plugin org.owasp.dependencycheck to v8
-- chore(deps): update plugin org.owasp.dependencycheck to v8.0.2
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.14.2
-- chore(deps): update plugin org.owasp.dependencycheck to v8.1.2
 - chore(deps): update plugin com.github.kt3k.coveralls to v2.12.2
 - chore(deps): update plugin io.github.gradle-nexus.publish-plugin to v1.3.0
 - chore(deps): update plugin org.owasp.dependencycheck to v8.2.1
 - chore(deps): update plugin org.sonarqube to v4
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.0
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.0
+- Upgraded to gradle 7 and Java 17
 
 ## [1.2.0] - 2022-05-05
 ### Added

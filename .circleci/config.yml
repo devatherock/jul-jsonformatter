@@ -19,7 +19,7 @@ pr_filter: &pr_filter
 executors:
   jdk-executor:
     docker:
-      - image: cimg/openjdk:11.0
+      - image: cimg/openjdk:17.0
         auth:
           username: $DOCKER_USERNAME
           password: $DOCKER_PASSWORD
@@ -70,7 +70,7 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies
       - run: |
-          ./gradlew build publishToSonatype coveralls sonarqube -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
+          ./gradlew build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
       - save_cache:
           paths:
             - ~/.gradle

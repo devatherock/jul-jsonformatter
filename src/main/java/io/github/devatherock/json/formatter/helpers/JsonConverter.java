@@ -9,5 +9,5 @@ import java.util.Map;
  *
  */
 public interface JsonConverter {
-	String convertToJson(Map<String, Object> map);
+    String convertToJson(Map<String, Object> map);
 }
