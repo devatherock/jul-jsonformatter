@@ -5,13 +5,13 @@ plugins {
     id 'jacoco'
     id 'org.sonarqube' version '4.0.0.2929'
     id 'com.github.kt3k.coveralls' version '2.12.2'
-    id 'com.palantir.jacoco-coverage' version '0.4.0'
     id 'io.github.gradle-nexus.publish-plugin' version '1.3.0'
+    id 'com.diffplug.spotless' version '6.18.0'
     id 'org.owasp.dependencycheck' version '8.2.1'
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 group = 'io.github.devatherock'
 description = 'java.util.logging.Formatter to log messages as JSON, compatible with Logstash'
 version = (System.env.CIRCLE_TAG ? System.env.CIRCLE_TAG.substring(1): '1.3.0') +
@@ -25,7 +25,7 @@ ext {
     jsonSimpleVersion = '1.1.1'
     gsonVersion = '2.10.1'
     jacksonVersion = '2.15.0'
-    
+
     // Properties for publishing
     licenseUrl = 'https://github.com/devatherock/jul-jsonformatter/blob/master/LICENSE.txt'
     scmUrl = 'https://github.com/devatherock/jul-jsonformatter/'
@@ -38,6 +38,16 @@ configurations {
             force 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
         }
     }
+
+    // Configurations for tests
+    jsonSimpleTestImplementation.extendsFrom testImplementation
+    jsonSimpleTestCompileOnly.extendsFrom compileOnly
+    gsonTestImplementation.extendsFrom testImplementation
+    gsonTestCompileOnly.extendsFrom compileOnly
+    jacksonTestImplementation.extendsFrom testImplementation
+    jacksonTestCompileOnly.extendsFrom compileOnly
+    customJsonTestImplementation.extendsFrom testImplementation
+    customJsonTestCompileOnly.extendsFrom compileOnly
 }
 
 dependencies {
@@ -45,40 +55,34 @@ dependencies {
     compileOnly group: 'com.google.code.gson', name: 'gson', version: gsonVersion
     compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 
-    testCompile group: 'junit', name: 'junit', version: '4.13.2'
-}
+    testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.9.3'
 
-// Configurations for tests
-configurations {
-    jsonSimpleTestCompile.extendsFrom testCompile
-    jsonSimpleTestCompileOnly.extendsFrom compileOnly
-    gsonTestCompile.extendsFrom testCompile
-    gsonTestCompileOnly.extendsFrom compileOnly
-    jacksonTestCompile.extendsFrom testCompile
-    jacksonTestCompileOnly.extendsFrom compileOnly
-    customJsonTestCompile.extendsFrom testCompile
-    customJsonTestCompileOnly.extendsFrom compileOnly
+    // Test configuration dependencies
+    jsonSimpleTestImplementation group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
+    gsonTestImplementation group: 'com.google.code.gson', name: 'gson', version: gsonVersion
+    jacksonTestImplementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 }
 
 // sourceSets for tests
 def allTestFiles = [
-    '**/JSONSimpleFormatterTest.java',
-    '**/GSONFormatterTest.java',
-    '**/JacksonFormatterTest.java',
-    '**/CustomJsonConverterTest.java',
-    '**/CustomKeysTest.java'
+    '**/JSONSimpleFormatterTest*',
+    '**/GSONFormatterTest*',
+    '**/JacksonFormatterTest*',
+    '**/CustomJsonConverterTest*',
+    '**/CustomKeysTest*'
 ]
 def inclusionsBySourceSet = [
     'jsonSimpleTest': [
-        '**/JSONSimpleFormatterTest.java'
+        '**/JSONSimpleFormatterTest*'
     ],
-    'gsonTest': ['**/GSONFormatterTest.java'],
+    'gsonTest': ['**/GSONFormatterTest*'],
     'jacksonTest': [
-        '**/JacksonFormatterTest.java',
-        '**/CustomKeysTest.java'
+        '**/JacksonFormatterTest*',
+        '**/CustomKeysTest*'
     ],
     'customJsonTest': [
-        '**/CustomJsonConverterTest.java'
+        '**/CustomJsonConverterTest*'
     ],
 ]
 
@@ -97,13 +101,6 @@ sourceSets {
             resources.srcDir file('src/test/resources')
         }
     }
-}
-
-// Test configuration dependencies
-dependencies {
-    jsonSimpleTestCompile group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
-    gsonTestCompile group: 'com.google.code.gson', name: 'gson', version: gsonVersion
-    jacksonTestCompile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 }
 
 /** Test tasks **/
@@ -125,8 +122,14 @@ for(int index = 0; index < testSourceSetNames.size(); index++) {
         description = "Test ${testDescriptions}"
         testClassesDirs = project.sourceSets[testSourceSetNames.get(index)].output.classesDirs
         classpath = project.sourceSets[testSourceSetNames.get(index)].runtimeClasspath
+
+        // Prevent JUnit5 from scanning for tests in non-test classes
+        include(inclusionsBySourceSet[testSourceSetNames[index]])
     }
 }
 
 apply from: 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/publish.gradle'
 apply from: 'checks.gradle'
+apply from: 'https://raw.githubusercontent.com/devatherock/gradle-includes/master/non-test-checks.gradle'
+
+compileTestJava.enabled = false
