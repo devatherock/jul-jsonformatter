@@ -35,7 +35,7 @@ configurations {
     // Force dependency versions to use dependencies without vulnerabilities
     all {
         resolutionStrategy {
-            force 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+            force 'com.fasterxml.jackson.core:jackson-databind:2.15.1'
         }
     }
 
