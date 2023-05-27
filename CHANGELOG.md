@@ -19,6 +19,7 @@
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.1
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.1
 - chore(deps): update plugin com.diffplug.spotless to v6.19.0
+- chore(deps): update plugin org.sonarqube to v4.1.0.3113
 
 ## [1.2.0] - 2022-05-05
 ### Added
