@@ -18,6 +18,7 @@
 - Upgraded to gradle 7 and Java 17
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.1
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.1
+- chore(deps): update plugin com.diffplug.spotless to v6.19.0
 
 ## [1.2.0] - 2022-05-05
 ### Added
