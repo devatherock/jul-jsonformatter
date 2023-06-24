@@ -26,6 +26,7 @@
 - chore(deps): update plugin org.sonarqube to v4.2.1.3168
 - chore(deps): update devatherock/simple-slack docker tag to v1
 - Configure Mend Bolt for GitHub
+- chore(deps): update plugin org.owasp.dependencycheck to v8.3.1
 
 ## [1.2.0] - 2022-05-05
 ### Added
