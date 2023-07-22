@@ -28,6 +28,7 @@
 - Configure Mend Bolt for GitHub
 - chore(deps): update plugin org.owasp.dependencycheck to v8.3.1
 - chore(deps): update dependency gradle to v7.6.2
+- chore(deps): update plugin com.diffplug.spotless to v6.20.0
 
 ## [1.2.0] - 2022-05-05
 ### Added
