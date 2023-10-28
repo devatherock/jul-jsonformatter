@@ -37,6 +37,7 @@
 - chore(deps): update plugin com.diffplug.spotless to v6.22.0
 - chore(deps): update dependency gradle to v7.6.3
 - chore(deps): update plugin org.owasp.dependencycheck to v8.4.2
+- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.3
 
 ## [1.2.0] - 2022-05-05
 ### Added
