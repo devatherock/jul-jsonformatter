@@ -40,6 +40,7 @@
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.3
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.15.3
 - chore(deps): update plugin org.sonarqube to v4.4.1.3373
+- fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.10.1
 
 ## [1.2.0] - 2022-05-05
 ### Added
