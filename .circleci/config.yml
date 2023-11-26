@@ -44,22 +44,11 @@ jobs:
             - "4a:86:fe:0e:c3:0e:ad:0d:1d:5c:3e:48:cf:28:39:5d"      
       - checkout
       - run: sh /scripts/entry-point.sh
-      
-  test:
-    executor: jdk-executor
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/jul-jsonformatter
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            - v1-dependencies
-      - run: |
-          ./gradlew check coveralls -x test
-      - store_test_results:
-          path: build/test-results
+
   build:
+    parameters:
+      command_args:
+        type: string
     executor: jdk-executor
     steps:
       - checkout
@@ -69,14 +58,17 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies
-      - run: |
-          ./gradlew build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test
+      - run:
+          name: run commands
+          no_output_timeout: 60m
+          command: ./gradlew << parameters.command_args >>
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
       - store_test_results:
           path: build/test-results
+
   publish:
     executor: jdk-executor
     steps:
@@ -110,6 +102,7 @@ workflows:
             - sonatype-credentials
             - sonar-credentials
             - dependencycheck-credentials
+          command_args: 'build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test'
           filters:
             branches:
               only: master
@@ -143,10 +136,12 @@ workflows:
             - docker-credentials
             - changelog-updater-credentials
           <<: *pr_filter
-      - test:
+      - build:
+          name: test
           context:
             - docker-credentials
             - dependencycheck-credentials
+          command_args: 'check coveralls -x test'
           <<: *pr_filter
           requires:
             - changelog_updater
