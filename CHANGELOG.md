@@ -44,6 +44,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v8.4.3
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.16.0
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.16.0
+- chore(deps): update plugin org.owasp.dependencycheck to v9
 
 ## [1.2.0] - 2022-05-05
 ### Added
