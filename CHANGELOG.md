@@ -58,6 +58,7 @@
 - chore(deps): update plugin com.diffplug.spotless to v6.25.0
 - chore(deps): update cimg/openjdk docker tag to v17.0.10
 - chore(deps): update dependency gradle to v7.6.4
+- fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.10.2
 
 ## [1.2.0] - 2022-05-05
 ### Added
