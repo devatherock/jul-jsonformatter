@@ -61,6 +61,7 @@
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.10.2
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.16.2
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.16.2
+- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.0
 
 ## [1.2.0] - 2022-05-05
 ### Added
