@@ -65,6 +65,7 @@
 - chore(deps): update plugin org.owasp.dependencycheck to v9.0.10
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.0
 - chore(deps): update plugin org.sonarqube to v5
+- chore(deps): update plugin org.owasp.dependencycheck to v9.1.0
 
 ## [1.2.0] - 2022-05-05
 ### Added
