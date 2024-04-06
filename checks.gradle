@@ -104,9 +104,21 @@ jacocoTestCoverageVerification {
 
 /** SonarQube config **/
 sonarqube {
+    def prLink = System.env['CIRCLE_PULL_REQUEST']
+
     properties {
         property 'sonar.jacoco.reportPaths', 'build/jacoco/customJsonTest.exec,build/jacoco/gsonTest.exec,build/jacoco/jacksonTest.exec,build/jacoco/jsonSimpleTest.exec'
         property 'sonar.junit.reportPaths', 'build/test-results/customJsonTest,build/test-results/gsonTest,build/test-results/jacksonTest,build/test-results/jsonSimpleTest'
+
+        // Required for PR analysis
+        if (prLink) {
+            property 'sonar.pullrequest.branch', System.env['CIRCLE_BRANCH']
+            property 'sonar.pullrequest.key', prLink.substring(prLink.lastIndexOf('/') + 1)
+            property 'sonar.pullrequest.base', 'master'
+            property 'sonar.pullrequest.provider', 'github'
+            property 'sonar.pullrequest.github.repository', "devatherock/${System.env['CIRCLE_PROJECT_REPONAME']}"
+            property 'sonar.pullrequest.github.endpoint', 'https://api.github.com/'
+        }
     }
 }
 

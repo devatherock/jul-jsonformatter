@@ -102,7 +102,7 @@ workflows:
             - sonatype-credentials
             - sonar-credentials
             - dependencycheck-credentials
-          command_args: 'build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.login=$SONAR_TOKEN -x test'
+          command_args: 'build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.token=$SONAR_TOKEN -x test'
           filters:
             branches:
               only: master
@@ -141,7 +141,8 @@ workflows:
           context:
             - docker-credentials
             - dependencycheck-credentials
-          command_args: 'check coveralls -x test'
+            - sonar-credentials
+          command_args: 'check coveralls sonar -Dsonar.token=$SONAR_TOKEN -x test'
           <<: *pr_filter
           requires:
             - changelog_updater
