@@ -24,6 +24,7 @@
 - chore(deps): update plugin io.github.gradle-nexus.publish-plugin to v2
 - chore(deps): update cimg/openjdk docker tag to v17.0.11
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.1
+- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.1
 
 ## [1.2.0] - 2022-05-05
 ### Added
