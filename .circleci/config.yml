@@ -1,20 +1,23 @@
-slack_image: &slack_image
-  docker:
-    - image: devatherock/simple-slack:1.0.0
-      auth:
-        username: $DOCKER_USERNAME
-        password: $DOCKER_PASSWORD
-
 work_directory: &work_directory
   working_directory: ~/jul-jsonformatter
 
 resource_class: &resource_class
   resource_class: small
+
+release_filter: &release_filter
+  filters:
+    branches:
+      only: non-existent-branch
+    tags:
+      only: /^v[0-9\.]+$/  
   
 pr_filter: &pr_filter
   filters:
     branches:
       ignore: master
+
+orbs:
+  templates: devatherock/circleci-templates@0.7.0      
   
 executors:
   jdk-executor:
@@ -28,23 +31,6 @@ executors:
 
 version: 2.1
 jobs:
-  changelog_updater:
-    docker:
-    - image: devatherock/changelog-updater:0.1.0
-      auth:
-        username: $DOCKER_USERNAME
-        password: $DOCKER_PASSWORD
-    <<: *resource_class
-    environment:
-      VELA_BUILD_AUTHOR: "renovate[bot]"
-      VELA_BUILD_AUTHOR_EMAIL: "29139614+renovate[bot]@users.noreply.github.com"
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "4a:86:fe:0e:c3:0e:ad:0d:1d:5c:3e:48:cf:28:39:5d"      
-      - checkout
-      - run: sh /scripts/entry-point.sh
-
   build:
     parameters:
       command_args:
@@ -80,58 +66,49 @@ jobs:
             - v1-dependencies-{{ checksum "build.gradle" }}
             - v1-dependencies
       - run: |
-          ./gradlew build publishToSonatype closeAndReleaseSonatypeStagingRepository -x check
-
-  notify:
-    <<: *slack_image
-    <<: *resource_class
-    environment:
-      TEXT: "Success: {{.CircleBuildUrl}} by {{.CircleUsername}}"
-      CHANNEL: general
-      TITLE: "Build completed"
-    steps:
-      - run: /bin/simpleslack -c "#33ad7f" || true          
+          ./gradlew build publishToSonatype closeAndReleaseSonatypeStagingRepository -x check         
            
 workflows:
   version: 2.1
   build_test:
     jobs:
+      - templates/slack:
+          name: notify
+          context:
+            - docker-credentials
+            - slack-webhook
+          filters:
+            branches:
+              only: master
       - build:
           context:
             - docker-credentials
             - sonatype-credentials
             - sonar-credentials
-            - dependencycheck-credentials
           command_args: 'build publishToSonatype coveralls sonar -Dsnapshot=true -Dsonar.token=$SONAR_TOKEN -x test'
-          filters:
-            branches:
-              only: master
-      - notify:
+          requires:
+            - notify
+
+  publish_artifacts:
+    jobs:
+      - templates/slack:
+          name: notify
           context:
             - docker-credentials
             - slack-webhook
-          requires:
-            - build
-  publish_artifacts:
-    jobs:
+          <<: *release_filter
       - publish:
           context:
             - docker-credentials
             - sonatype-credentials
-          filters:
-            branches:
-              only: non-existent-branch
-            tags:
-              only: /^v[0-9\.]+$/
-      - notify:
-          context:
-            - docker-credentials
-            - slack-webhook
+          <<: *release_filter  
           requires:
-            - publish
+            - notify
+
   pr_check:
     jobs:
-      - changelog_updater:
+      - templates/changelog_updater:
+          name: changelog_updater
           context:
             - docker-credentials
             - changelog-updater-credentials
@@ -140,7 +117,6 @@ workflows:
           name: test
           context:
             - docker-credentials
-            - dependencycheck-credentials
             - sonar-credentials
           command_args: 'check coveralls sonar -Dsonar.token=$SONAR_TOKEN -x test'
           <<: *pr_filter

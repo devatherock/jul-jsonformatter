@@ -12,19 +12,16 @@
 - chore: Used custom ssh key to push to github
 - fix(deps): update dependency com.google.code.gson:gson to v2.10.1
 - chore(deps): update plugin com.github.kt3k.coveralls to v2.12.2
-- chore(deps): update devatherock/simple-slack docker tag to v1
 - Configure Mend Bolt for GitHub
-- chore(deps): update plugin com.diffplug.spotless to v6.25.0
-- chore(deps): update cimg/openjdk docker tag to v17.0.10
 - chore(deps): update dependency gradle to v7.6.4
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.10.2
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.0
 - chore(deps): update plugin org.sonarqube to v5
-- chore(deps): update plugin org.owasp.dependencycheck to v9.1.0
 - chore(deps): update plugin io.github.gradle-nexus.publish-plugin to v2
 - chore(deps): update cimg/openjdk docker tag to v17.0.11
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.1
-- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.1
+
+### Removed
+- Dependency check plugin
 
 ## [1.2.0] - 2022-05-05
 ### Added
