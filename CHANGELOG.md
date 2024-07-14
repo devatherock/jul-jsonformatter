@@ -23,6 +23,7 @@
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.10.3
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.2
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.17.2
+- chore(deps): update plugin org.sonarqube to v5.1.0.4882
 
 ### Removed
 - Dependency check plugin
