@@ -28,6 +28,7 @@
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.11.1
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.18.0
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.11.2
+- fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.11.3
 
 ### Removed
 - Dependency check plugin
