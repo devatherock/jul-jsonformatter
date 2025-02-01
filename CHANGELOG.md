@@ -36,6 +36,7 @@
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.11.4
 - chore(deps): update plugin com.diffplug.spotless to v7
 - chore(deps): update plugin com.diffplug.spotless to v7.0.2
+- fix(deps): update dependency com.google.code.gson:gson to v2.12.1
 
 ### Removed
 - Dependency check plugin
