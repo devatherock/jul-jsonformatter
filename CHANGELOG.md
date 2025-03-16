@@ -39,6 +39,7 @@
 - fix(deps): update dependency com.google.code.gson:gson to v2.12.1
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.12.0
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.18.3
+- fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.12.1
 
 ### Removed
 - Dependency check plugin
