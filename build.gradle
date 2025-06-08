@@ -55,7 +55,7 @@ dependencies {
     compileOnly group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
 
     testImplementation group: 'junit', name: 'junit', version: '4.13.2'
-    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.12.2'
+    testImplementation group: 'org.junit.vintage', name: 'junit-vintage-engine', version: '5.13.1'
 
     // Test configuration dependencies
     jsonSimpleTestImplementation group: 'com.googlecode.json-simple', name: 'json-simple', version: jsonSimpleVersion
