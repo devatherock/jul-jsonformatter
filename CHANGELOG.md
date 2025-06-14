@@ -50,6 +50,7 @@
 - chore(deps): update plugin com.diffplug.spotless to v7.0.4
 - chore(deps): update dependency gradle to v7.6.5
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.13.1
+- fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.19.1
 
 ### Removed
 - Dependency check plugin
