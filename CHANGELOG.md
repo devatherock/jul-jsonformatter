@@ -53,6 +53,7 @@
 - fix(deps): update dependency com.fasterxml.jackson.core:jackson-databind to v2.19.1
 - fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.13.2
 - chore(deps): update dependency gradle to v7.6.6
+- fix(deps): update dependency org.junit.vintage:junit-vintage-engine to v5.13.3
 
 ### Removed
 - Dependency check plugin
