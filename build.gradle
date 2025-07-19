@@ -23,7 +23,7 @@ repositories {
 ext {
     jsonSimpleVersion = '1.1.1'
     gsonVersion = '2.13.1'
-    jacksonVersion = '2.19.1'
+    jacksonVersion = '2.19.2'
 
     // Properties for publishing
     licenseUrl = 'https://github.com/devatherock/jul-jsonformatter/blob/master/LICENSE.txt'
@@ -34,7 +34,7 @@ configurations {
     // Force dependency versions to use dependencies without vulnerabilities
     all {
         resolutionStrategy {
-            force 'com.fasterxml.jackson.core:jackson-databind:2.19.1'
+            force 'com.fasterxml.jackson.core:jackson-databind:2.19.2'
         }
     }
 
